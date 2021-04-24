@@ -125,7 +125,7 @@ private:
     location my_location;
 public:
     LocationManager();
-    LocationManager(location _my_location);
+    LocationManager(const location& _my_location);
 
     // Геттер
     location get_location() const;

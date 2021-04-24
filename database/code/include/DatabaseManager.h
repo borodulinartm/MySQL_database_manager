@@ -9,17 +9,25 @@
 #include <mysql/mysql.h>
 
 #define DATABASE_NAME "testdb"
+#define ERROR_TITLE "An error occured: "
 
 class DatabaseManager: public IDatabaseManager {
-protected:
+public:
+    DatabaseManager();
+    ~DatabaseManager();
+    void set_query(const std::string& _query);
+    bool is_db_connected() const;
+
     bool connect_to_db() override;
-    bool disconnect_to_db() override;
     bool create_db() override;
     bool is_db_exists() override;
 
 private:
     MYSQL *conn_ptr;
     std::string query;
+    bool is_connected;
+
+    bool connect_to_user();
 };
 
 #endif //  UNTITLED_DB_MANAGER_H

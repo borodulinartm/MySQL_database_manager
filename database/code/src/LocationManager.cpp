@@ -1,9 +1,20 @@
 #include "TableManager.h"
 
 LocationManager::LocationManager() {
+    DatabaseManager dbManager;
+//    if (dbManager.create_db()) {
+//        std::cout << "SUCCESS CREATE DATABASE\n";
+//    }
+
+    if (!is_db_connected()) {
+        bool res = dbManager.connect_to_db();
+        if (res) {
+            std::cout << "Connected";
+        }
+    }
 }
 
-LocationManager::LocationManager(location _) {
+LocationManager::LocationManager(const location& _my_location) {
 }
 
 bool LocationManager::add(std::string data) {
