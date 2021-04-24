@@ -15,7 +15,7 @@ class DatabaseManager: public IDatabaseManager {
 public:
     DatabaseManager();
     ~DatabaseManager();
-    void set_query(const std::string& _query);
+    void set_query(const std::string& _query, bool add_database_name = true);
     bool is_db_connected() const;
 
     bool connect_to_db() override;

@@ -1,16 +1,22 @@
+#include <cstring>
 #include "DatabaseManager.h"
+
 
 DatabaseManager::DatabaseManager() {
     conn_ptr = mysql_init(nullptr);
     is_connected = false;
 }
 
-void DatabaseManager::set_query(const std::string& _query) {
+void DatabaseManager::set_query(const std::string& _query, bool add_database_name) {
     if (!query.empty()) {
         query.clear();
     }
 
-    query = _query + DATABASE_NAME;
+    if (add_database_name) {
+        query = _query + DATABASE_NAME;
+    } else {
+        query = _query;
+    }
 }
 
 DatabaseManager::~DatabaseManager() {
@@ -76,7 +82,32 @@ bool DatabaseManager::create_db() {
 }
 
 bool DatabaseManager::is_db_exists() {
+    set_query("SHOW DATABASES", false);
 
-    return true;
+    if (mysql_query(conn_ptr, query.c_str())) {
+        std::cerr << ERROR_TITLE << mysql_error(conn_ptr) << std::endl;
+        return false;
+    }
+
+    MYSQL_RES *data_result = mysql_store_result(conn_ptr);
+    if (data_result == nullptr) {
+        std::cout << "No data\n";
+        return false;
+    }
+
+    int num_fields = static_cast<int>(mysql_num_fields(data_result));
+    MYSQL_ROW current_row;
+
+    while ((current_row = mysql_fetch_row(data_result))) {
+        for(size_t i = 0; i < num_fields; ++i) {
+            if (current_row[i] != nullptr && strcmp(current_row[i], DATABASE_NAME) == 0) {
+                mysql_free_result(data_result);
+                return true;
+            }
+        }
+    }
+
+    mysql_free_result(data_result);
+    return false;
 }
 

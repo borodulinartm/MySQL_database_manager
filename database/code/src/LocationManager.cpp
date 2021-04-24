@@ -9,8 +9,12 @@ LocationManager::LocationManager() {
     if (!is_db_connected()) {
         bool res = dbManager.connect_to_db();
         if (res) {
-            std::cout << "Connected";
+            std::cout << "Connected\n";
         }
+    }
+
+    if (dbManager.is_db_exists()) {
+        std::cout << "DB EXIST\n";
     }
 }
 
