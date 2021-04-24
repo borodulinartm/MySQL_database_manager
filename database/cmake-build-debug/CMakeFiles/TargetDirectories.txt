@@ -1,0 +1,6 @@
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/database.dir
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/database_prog.dir
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/test.dir
+/home/artem/working/MySQL_database_manager/database/cmake-build-debug/CMakeFiles/test_database.dir
