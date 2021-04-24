@@ -11,7 +11,22 @@ bool DatabaseManager::disconnect_to_db() {
 }
 
 bool DatabaseManager::create_db() {
-    std::cout << "Created\n";
+    conn_ptr = mysql_init(nullptr);
+    if (!conn_ptr) {
+        std::cerr << "An error occured: " << mysql_error(conn_ptr) << std::endl;
+        mysql_close(conn_ptr);
+        return false;
+    }
+
+    if (mysql_query(conn_ptr, query.c_str())) {
+        std::cerr << "An error occured: " << mysql_error(conn_ptr) << std::endl;
+        mysql_close(conn_ptr);
+        return false;
+    }
+
+    mysql_close(conn_ptr);
+    std::cout << "SUCCESS\n";
+
     return true;
 }
 

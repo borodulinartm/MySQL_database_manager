@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdatabase.a CMakeFiles/database.dir/code/src/CafeManager.cpp.o CMakeFiles/database.dir/code/src/ClientManager.cpp.o CMakeFiles/database.dir/code/src/DatabaseManager.cpp.o CMakeFiles/database.dir/code/src/FoodManager.cpp.o CMakeFiles/database.dir/code/src/ListFoodManager.cpp.o CMakeFiles/database.dir/code/src/LocationManager.cpp.o CMakeFiles/database.dir/code/src/QueueManager.cpp.o CMakeFiles/database.dir/code/src/OrderManager.cpp.o
-/usr/bin/ranlib libdatabase.a
