@@ -1,11 +1,12 @@
 #include <iostream>
 #include "DatabaseManager.h"
+#include "TableManager.h"
 
 int main() {
     DatabaseManager databaseManager;
-    bool res = databaseManager._connectToUser();
-    if (res) {
-        databaseManager.create_db();
-    }
+    ClientManager clientManager(databaseManager);
+
+    std::string data = "NDJE";
+    clientManager.add(data);
     return 0;
 }

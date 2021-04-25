@@ -7,21 +7,23 @@
 
 #include <vector>
 
-class ClientManager: public DatabaseManager, ITableManager {
+class ClientManager: public ITableManager {
 private:
     client my_client;
+    DatabaseManager dbManager;
 public:
+    ClientManager(DatabaseManager _dbManager);
+    ClientManager(client _my_client, DatabaseManager _dbManager);
     ClientManager();
-    ClientManager(client _my_client);
 
     client get_client() const;
-
     // Переопределённые методы
     bool add(std::string data) override;
     std::string get(int id) override;
-    bool erase(int id) override;
 
+    bool erase(int id) override;
     std::string to_string() override;
+
     void from_string(std::string string) override;
 };
 

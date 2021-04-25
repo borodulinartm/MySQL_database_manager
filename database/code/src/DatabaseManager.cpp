@@ -4,6 +4,7 @@ DatabaseManager::DatabaseManager() {
     driver = sql::mysql::get_driver_instance();
     connection = nullptr;
     is_connected_to_user = false;
+    is_connected_to_database = false;
 }
 
 DatabaseManager::~DatabaseManager() {
@@ -59,44 +60,71 @@ void DatabaseManager::PrintError(sql::SQLException &exception) {
     std::cout << "SQLState: " << exception.getSQLState() << std::endl;
 }
 
-void DatabaseManager::SetQuery(std::string _query) {
-    query = _query + " " + DATABASE_NAME;
+void DatabaseManager::SetQuery(const std::string& _query, bool add_database_name) {
+    if (add_database_name) {
+        query = _query + " " + DATABASE_NAME;
+    } else {
+        query = _query;
+    }
+}
+
+// Database functions
+
+bool DatabaseManager::is_connected_to_db() const {
+    return is_connected_to_database;
 }
 
 bool DatabaseManager::connect_to_db() {
-    if (is_connected_to_user) {
-        try {
-            connection->setSchema(DATABASE_NAME);
-            return true;
-        } catch (sql::SQLException &exception) {
-            PrintError(exception);
-        }
+    if (!is_connected_to_user) {
+        _connectToUser();
+    }
+
+    try {
+        connection->setSchema(DATABASE_NAME);
+        is_connected_to_database = true;
+        return is_connected_to_database;
+    } catch (sql::SQLException &exception) {
+        PrintError(exception);
     }
 
     return false;
 }
 
-bool DatabaseManager::disconnect_to_db() {
-    std::cout << "Disconnected\n";
-    return true;
-}
-
 bool DatabaseManager::create_db() {
-    SetQuery("CREATE DATABASE");
-    if (is_connected_to_user) {
-        try {
-            statement = connection->createStatement();
-            statement->execute(query);
-        } catch (sql::SQLException &exception) {
-            PrintError(exception);
-            return false;
-        }
+    SetQuery("CREATE DATABASE", true);
+    if (!is_connected_to_user) {
+        _connectToUser();
     }
 
+    try {
+        statement = connection->createStatement();
+        statement->execute(query);
+    } catch (sql::SQLException &exception) {
+        PrintError(exception);
+        return false;
+    }
     return true;
 }
 
 bool DatabaseManager::is_db_exists() {
-    return true;
-}
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
 
+    try {
+        SetQuery("SHOW DATABASES", false);
+        statement = connection->createStatement();
+        resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            std::string database_name = resultSet->getString("Database");
+            if (database_name == DATABASE_NAME) {
+                return true;
+            }
+        }
+    } catch (sql::SQLException &exception) {
+        PrintError(exception);
+    }
+
+    return false;
+}

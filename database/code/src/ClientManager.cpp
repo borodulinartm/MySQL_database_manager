@@ -1,12 +1,27 @@
 #include "TableManager.h"
 
-ClientManager::ClientManager() {
+ClientManager::ClientManager(DatabaseManager _dbManager) {
+    dbManager = _dbManager;
 };
 
-ClientManager::ClientManager(client _my_client) {
+ClientManager::ClientManager(client _my_client, DatabaseManager _dbManager): my_client(_my_client),
+                            dbManager(_dbManager) {
+}
+
+ClientManager::ClientManager() {
+    // Some data
 }
 
 bool ClientManager::add(std::string data) {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
+
+    std::cout << "ADDED\n";
     return true;
 }
 

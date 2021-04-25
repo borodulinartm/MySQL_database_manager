@@ -25,24 +25,26 @@ public:
     ~DatabaseManager();
 
     bool connect_to_db() override;
-    bool disconnect_to_db() override;
     bool create_db() override;
     bool is_db_exists() override;
 
-    bool _connectToUser();
-    bool _disconnectToUser();
+    bool is_connected_to_db() const;
 
 private:
+
     sql::Driver *driver;
     sql::Connection *connection;
     sql::Statement *statement;
     sql::ResultSet *resultSet;
-
     bool is_connected_to_user;
+
+    bool is_connected_to_database;
     std::string query;
 
     void PrintError(sql::SQLException &exception);
-    void SetQuery(std::string _query);
+    void SetQuery(const std::string& _query, bool add_database_name);
+    bool _connectToUser();
+    bool _disconnectToUser();
 };
 
 #endif //  UNTITLED_DB_MANAGER_H
