@@ -4,6 +4,8 @@
 int main() {
     DatabaseManager databaseManager;
     bool res = databaseManager._connectToUser();
-    std::cout << res << std::endl;
+    if (res) {
+        databaseManager.create_db();
+    }
     return 0;
 }
