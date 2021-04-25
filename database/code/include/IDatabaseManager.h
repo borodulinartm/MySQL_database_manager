@@ -10,6 +10,7 @@ class IDatabaseManager {
 protected:
     // Методы для БД
     virtual bool connect_to_db() = 0;
+    virtual bool disconnect_to_db() = 0;
     virtual bool create_db() = 0;
     virtual bool is_db_exists() = 0;
 };

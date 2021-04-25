@@ -1,8 +1,11 @@
-#include <mysql/mysql.h>
-#include <iostream>
-#include "TableManager.h"
+#include "mysql_driver.h"
+#include <mysql_connection.h>
+#include <cppconn/driver.h>
 
-int main() {
-    LocationManager locationManager;
+using namespace std;
 
+
+int main(){
+    auto driver = sql::mysql::get_driver_instance();
+    return 0;
 }
