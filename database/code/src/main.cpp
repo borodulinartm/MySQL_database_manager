@@ -1,11 +1,9 @@
-#include "mysql_driver.h"
-#include <mysql_connection.h>
-#include <cppconn/driver.h>
+#include <iostream>
+#include "DatabaseManager.h"
 
-using namespace std;
-
-
-int main(){
-    auto driver = sql::mysql::get_driver_instance();
+int main() {
+    DatabaseManager databaseManager;
+    bool res = databaseManager._connectToUser();
+    std::cout << res << std::endl;
     return 0;
 }
