@@ -225,22 +225,46 @@ std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::strin
         connect_to_db();
     }
 
-    query = "SELECT * FROM " + table_name;
-
-    statement = connection->createStatement();
-    resultSet = statement->executeQuery(query);
-
     std::vector<std::vector<std::string>> data;
-    std::vector<std::string> row;
+    try {
+        query = "SELECT * FROM " + table_name;
 
-    while (resultSet->next()) {
-        for(auto &col : cols) {
-            row.push_back(resultSet->getString(col));
+        statement = connection->createStatement();
+        resultSet = statement->executeQuery(query);
+
+        std::vector<std::string> row;
+
+        while (resultSet->next()) {
+            for(auto &col : cols) {
+                row.push_back(resultSet->getString(col));
+            }
+
+            data.push_back(row);
+            row.clear();
         }
-
-        data.push_back(row);
-        row.clear();
+        return data;
+    } catch (sql::SQLException &exception) {
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
     return data;
+}
+
+bool DatabaseManager::delete_data(std::string &table_name, int id) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    try {
+        query = "DELETE FROM " + table_name + " WHERE id=" + std::to_string(id);
+
+        preparedStatement = connection->prepareStatement(query);
+        preparedStatement->executeUpdate();
+
+        return true;
+    } catch (sql::SQLException &exception) {
+        PrintError(exception, __FUNCTION__, __LINE__);
+    }
+
+    return false;
 }

@@ -42,7 +42,7 @@ std::vector<std::vector<std::string>> ClientManager::get(int id) {
 }
 
 bool ClientManager::erase(int id) {
-    return true;
+    return dbManager.delete_data(table_name, id);
 }
 
 std::vector<std::string> ClientManager::to_vector() {

@@ -35,6 +35,7 @@ public:
 
     bool insert_data(const std::string& table_name, std::vector<std::string> &data) override;
     std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) override;
+    virtual bool delete_data(std::string &table_name, int id) override;
 
     bool is_table_exists(const std::string& table);
     bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns);

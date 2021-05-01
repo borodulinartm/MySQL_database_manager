@@ -8,6 +8,7 @@ int main() {
     client cl = {1, "Artem", "@bus", "thth1234", 1};
     ClientManager clientManager(cl);
 
+//    clientManager.add("frfrf");
     auto big_data = clientManager.get(0);
     for(auto & i : big_data) {
         for(auto & j : i) {
@@ -16,5 +17,7 @@ int main() {
 
         std::cout << std::endl;
     }
+
+    clientManager.erase(1);
     return 0;
 }
