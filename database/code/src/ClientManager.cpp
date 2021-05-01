@@ -1,17 +1,15 @@
 #include <utility>
 
 #include "TableManager.h"
+#include "Data.h"
 
-ClientManager::ClientManager(const DatabaseManager& _dbManager) {
+ClientManager::ClientManager(const DatabaseManager& _dbManager, client _my_client): dbManager(_dbManager),
+                table_name("clients"), my_client(std::move(_my_client)) {
     dbManager = _dbManager;
 };
 
-ClientManager::ClientManager(client _my_client, const DatabaseManager& _dbManager): my_client(std::move(_my_client)),
-                            dbManager(_dbManager) {
-}
-
-ClientManager::ClientManager() {
-    // Some data
+ClientManager::ClientManager(client _my_client): table_name("clients"),
+                my_client(std::move(_my_client)) {
 }
 
 bool ClientManager::add(std::string data) {
@@ -23,17 +21,15 @@ bool ClientManager::add(std::string data) {
         dbManager.connect_to_db();
     }
 
-    if (!dbManager.is_table_exists("clients")) {
+    if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
-        std::vector<std::pair<std::string, std::string>> data;
-
-        data.emplace_back("id", "INT");
-        data.emplace_back("name", "VARCHAR(30)");
-
-        dbManager.create_table("clients", data);
+        auto cols = client::get_columns();
+        dbManager.create_table(table_name, cols);
     }
 
-    std::cout << "ADDED\n";
+    auto res = to_vector();
+    dbManager.insert_data(table_name, res);
+
     return true;
 }
 
@@ -45,14 +41,14 @@ bool ClientManager::erase(int id) {
     return true;
 }
 
-std::string ClientManager::to_string() {
-    return std::string();
-}
+std::vector<std::string> ClientManager::to_vector() {
+    std::vector<std::string> to_return = {
+            std::to_string(my_client.user_id),
+            my_client.name,
+            my_client.login,
+            my_client.password,
+            std::to_string(my_client.registration_code)
+    };
 
-void ClientManager::from_string(std::string string) {
+    return to_return;
 }
-
-client ClientManager::get_client() const {
-    return my_client;
-}
-

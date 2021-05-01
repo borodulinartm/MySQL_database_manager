@@ -9,22 +9,20 @@
 
 class ClientManager: public ITableManager {
 private:
-    client my_client;
     DatabaseManager dbManager;
-public:
-    ClientManager(const DatabaseManager& _dbManager);
-    ClientManager(client _my_client, const DatabaseManager& _dbManager);
-    ClientManager();
+    std::string table_name;
+    client my_client;
 
-    client get_client() const;
+public:
+    ClientManager(const DatabaseManager& _dbManager, client _my_client);
+    explicit ClientManager(client _my_client);
+
     // Переопределённые методы
     bool add(std::string data) override;
     std::string get(int id) override;
-
     bool erase(int id) override;
-    std::string to_string() override;
 
-    void from_string(std::string string) override;
+    std::vector<std::string> to_vector();
 };
 
 class CafeManager: public DatabaseManager, ITableManager {
@@ -41,9 +39,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 class QueueManager: public DatabaseManager, ITableManager {
@@ -60,9 +55,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 class ListFoodManager: public DatabaseManager, ITableManager {
@@ -79,9 +71,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 class FoodManager: public DatabaseManager, ITableManager {
@@ -98,9 +87,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 class OrderManager: public DatabaseManager, ITableManager {
@@ -117,9 +103,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 class LocationManager: public DatabaseManager, ITableManager {
@@ -136,9 +119,6 @@ public:
     bool add(std::string data) override;
     std::string get(int id) override;
     bool erase(int id) override;
-
-    std::string to_string() override;
-    void from_string(std::string string) override;
 };
 
 #endif //  DATABASE_TABLEMANAGER_H

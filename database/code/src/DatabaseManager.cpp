@@ -1,7 +1,7 @@
 #include "DatabaseManager.h"
 
 DatabaseManager::DatabaseManager(): connection(nullptr), statement(nullptr), resultSet(nullptr), is_connected_to_user(
-        false), is_connected_to_database(false) {
+        false), is_connected_to_database(false), preparedStatement(nullptr) {
     driver = sql::mysql::get_driver_instance();
 }
 
@@ -139,7 +139,7 @@ bool DatabaseManager::is_table_exists(const std::string& table) {
         resultSet = statement->executeQuery(query);
 
         while (resultSet->next()) {
-            std::string table_name = resultSet->getString("Table");
+            std::string table_name = resultSet->getString("Tables_in_testdb");
             if (table_name == table) {
                 return true;
             }
@@ -151,6 +151,7 @@ bool DatabaseManager::is_table_exists(const std::string& table) {
     return false;
 }
 
+// Создаёт таблицу
 bool DatabaseManager::create_table(const std::string& table_name,
                                    const std::vector<std::pair<std::string, std::string>>& columns) {
     if (!is_connected_to_database) {
@@ -165,7 +166,48 @@ bool DatabaseManager::create_table(const std::string& table_name,
         }
     }
 
-    query += ");";
-    std::cout << query << std::endl;
+    query += ")";
+
+    statement = connection->createStatement();
+    statement->execute(query);
+
     return true;
+}
+
+// Вставка данных в таблицу (будет работать для любого типа таблицы)
+bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std::string> &data) {
+    query = "INSERT INTO " + table_name + " VALUES(";
+    for(size_t i = 0; i < data.size(); ++i) {
+        if (i != data.size() - 1) {
+            query += "?,";
+        } else {
+            query += "?";
+        }
+    }
+
+    query += ")";
+
+    preparedStatement = connection->prepareStatement(query);
+    int count = 1;
+
+    for(auto & i : data) {
+        if (is_digit(i)) {
+            preparedStatement->setInt(count, std::stoi(i));
+        } else {
+            preparedStatement->setString(count, i);
+        }
+
+        ++count;
+    }
+
+    preparedStatement->executeUpdate();
+    return true;
+}
+
+bool DatabaseManager::is_digit(std::string &str) {
+    return !str.empty() && std::find_if(
+        str.begin(), str.end(), [](char c) {
+            return !std::isdigit(c);
+        }
+    ) == str.end();
 }

@@ -18,13 +18,6 @@ bool OrderManager::erase(int id) {
     return false;
 }
 
-std::string OrderManager::to_string() {
-    return std::string();
-}
-
-void OrderManager::from_string(std::string string) {
-}
-
 order OrderManager::get_order() const {
     return my_order;
 }

@@ -4,9 +4,9 @@
 
 int main() {
     DatabaseManager databaseManager;
-    ClientManager clientManager(databaseManager);
+    client cl = {1, "Artem", "@bus", "thth1234", 1};
+    ClientManager clientManager(cl);
 
-    std::string data = "NDJE";
-    clientManager.add(data);
+    clientManager.add("hbfr");
     return 0;
 }

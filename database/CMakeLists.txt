@@ -9,6 +9,7 @@ set(LIB_SOURCE_FILES
         code/src/CafeManager.cpp code/src/ClientManager.cpp code/src/DatabaseManager.cpp
         code/src/FoodManager.cpp code/src/ListFoodManager.cpp code/src/LocationManager.cpp
         code/src/QueueManager.cpp code/src/OrderManager.cpp
+        code/src/DataManager.cpp
 )
 
 add_library(database STATIC ${LIB_SOURCE_FILES})

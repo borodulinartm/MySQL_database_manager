@@ -22,13 +22,6 @@ bool CafeManager::erase(int id) {
     return false;
 }
 
-std::string CafeManager::to_string() {
-    return std::string();
-}
-
-void CafeManager::from_string(std::string string) {
-}
-
 cafe CafeManager::get_cafe() const {
     return cafe();
 }

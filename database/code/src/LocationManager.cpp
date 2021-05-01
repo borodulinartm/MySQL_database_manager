@@ -18,13 +18,6 @@ bool LocationManager::erase(int id) {
     return false;
 }
 
-std::string LocationManager::to_string() {
-    return std::string();
-}
-
-void LocationManager::from_string(std::string string) {
-}
-
 location LocationManager::get_location() const {
     return my_location;
 }

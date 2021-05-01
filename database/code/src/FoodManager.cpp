@@ -18,13 +18,6 @@ bool FoodManager::erase(int id) {
     return false;
 }
 
-std::string FoodManager::to_string() {
-    return std::string();
-}
-
-void FoodManager::from_string(std::string string) {
-}
-
 food FoodManager::get_food() const {
     return my_food;
 }

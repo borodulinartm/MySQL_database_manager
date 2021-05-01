@@ -18,13 +18,6 @@ bool ListFoodManager::erase(int id) {
     return false;
 }
 
-std::string ListFoodManager::to_string() {
-    return std::string();
-}
-
-void ListFoodManager::from_string(std::string string) {
-}
-
 std::vector<list_food> ListFoodManager::get_list_food() {
     return my_list_food;
 }

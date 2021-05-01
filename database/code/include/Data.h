@@ -2,6 +2,7 @@
 #define UNTITLED_DATA_H
 
 #include <string>
+#include <vector>
 
 struct client {
     int user_id;
@@ -9,7 +10,8 @@ struct client {
     std::string login;
     std::string password;
     int registration_code;
-    int id_dislike_food;
+
+    static std::vector<std::pair<std::string, std::string>> get_columns();
 };
 
 struct list_food {
