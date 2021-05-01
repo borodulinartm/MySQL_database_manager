@@ -1,10 +1,8 @@
 #include "DatabaseManager.h"
 
-DatabaseManager::DatabaseManager() {
+DatabaseManager::DatabaseManager(): connection(nullptr), statement(nullptr), resultSet(nullptr), is_connected_to_user(
+        false), is_connected_to_database(false) {
     driver = sql::mysql::get_driver_instance();
-    connection = nullptr;
-    is_connected_to_user = false;
-    is_connected_to_database = false;
 }
 
 DatabaseManager::~DatabaseManager() {
@@ -106,6 +104,7 @@ bool DatabaseManager::create_db() {
     return true;
 }
 
+// Проверка на существование базы данных
 bool DatabaseManager::is_db_exists() {
     if (!is_connected_to_database) {
         connect_to_db();
@@ -127,4 +126,46 @@ bool DatabaseManager::is_db_exists() {
     }
 
     return false;
+}
+
+bool DatabaseManager::is_table_exists(const std::string& table) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    try {
+        SetQuery("SHOW TABLES", false);
+        statement = connection->createStatement();
+        resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            std::string table_name = resultSet->getString("Table");
+            if (table_name == table) {
+                return true;
+            }
+        }
+    } catch (sql::SQLException &exception) {
+        PrintError(exception);
+    }
+
+    return false;
+}
+
+bool DatabaseManager::create_table(const std::string& table_name,
+                                   const std::vector<std::pair<std::string, std::string>>& columns) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    query = "CREATE TABLE " + table_name + "(";
+    for(size_t i = 0; i < columns.size(); ++i) {
+        query += columns[i].first + " " + columns[i].second;
+        if (i != columns.size() - 1) {
+            query += ", ";
+        }
+    }
+
+    query += ");";
+    std::cout << query << std::endl;
+    return true;
 }

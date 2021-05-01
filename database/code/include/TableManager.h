@@ -12,8 +12,8 @@ private:
     client my_client;
     DatabaseManager dbManager;
 public:
-    ClientManager(DatabaseManager _dbManager);
-    ClientManager(client _my_client, DatabaseManager _dbManager);
+    ClientManager(const DatabaseManager& _dbManager);
+    ClientManager(client _my_client, const DatabaseManager& _dbManager);
     ClientManager();
 
     client get_client() const;

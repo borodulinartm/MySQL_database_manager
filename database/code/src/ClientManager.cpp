@@ -1,10 +1,12 @@
+#include <utility>
+
 #include "TableManager.h"
 
-ClientManager::ClientManager(DatabaseManager _dbManager) {
+ClientManager::ClientManager(const DatabaseManager& _dbManager) {
     dbManager = _dbManager;
 };
 
-ClientManager::ClientManager(client _my_client, DatabaseManager _dbManager): my_client(_my_client),
+ClientManager::ClientManager(client _my_client, const DatabaseManager& _dbManager): my_client(std::move(_my_client)),
                             dbManager(_dbManager) {
 }
 
@@ -19,6 +21,16 @@ bool ClientManager::add(std::string data) {
 
     if (!dbManager.is_connected_to_db()) {
         dbManager.connect_to_db();
+    }
+
+    if (!dbManager.is_table_exists("clients")) {
+        std::cout << "TABLE NOT EXIST\n";
+        std::vector<std::pair<std::string, std::string>> data;
+
+        data.emplace_back("id", "INT");
+        data.emplace_back("name", "VARCHAR(30)");
+
+        dbManager.create_table("clients", data);
     }
 
     std::cout << "ADDED\n";

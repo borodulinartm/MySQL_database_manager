@@ -18,11 +18,11 @@ include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include)
 include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysql)
 link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
 
-add_executable(database_prog code/src/main.cpp)
-target_link_libraries(database_prog database)
-target_link_libraries(database_prog)
-target_link_libraries(database_prog mysqlcppconn)
-target_compile_features(database_prog PRIVATE cxx_range_for)
+add_executable(prog code/src/main.cpp)
+target_link_libraries(prog database)
+target_link_libraries(prog)
+target_link_libraries(prog mysqlcppconn)
+target_compile_features(prog PRIVATE cxx_range_for)
 
 # Тесты
 enable_testing()

@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #define ADDRESS "localhost"
 #define USER_NAME "artem"
@@ -26,12 +27,15 @@ public:
 
     bool connect_to_db() override;
     bool create_db() override;
-    bool is_db_exists() override;
 
+    bool is_db_exists() override;
     bool is_connected_to_db() const;
 
-private:
+    bool is_table_exists(const std::string& table);
+    bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns);
 
+private:
+    // Указатели, которые нужно будет превратить в smart pointers
     sql::Driver *driver;
     sql::Connection *connection;
     sql::Statement *statement;
