@@ -11,7 +11,8 @@ struct client {
     std::string password;
     int registration_code;
 
-    static std::vector<std::pair<std::string, std::string>> get_columns();
+    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
+    static std::vector<std::string> get_cols();
 };
 
 struct list_food {

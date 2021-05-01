@@ -34,6 +34,7 @@ public:
     bool is_connected_to_db() const;
 
     bool insert_data(const std::string& table_name, std::vector<std::string> &data) override;
+    std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) override;
 
     bool is_table_exists(const std::string& table);
     bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns);
@@ -50,8 +51,7 @@ private:
     bool is_connected_to_database;
     std::string query;
 
-    void PrintError(sql::SQLException &exception);
-    void SetQuery(const std::string& _query, bool add_database_name);
+    void PrintError(sql::SQLException &exception, std::string function, int line);
     bool _connectToUser();
     bool _disconnectToUser();
     bool is_digit(std::string &str);

@@ -10,14 +10,14 @@ bool OrderManager::add(std::string data) {
     return false;
 }
 
-std::string OrderManager::get(int id) {
-    return std::string();
-}
-
 bool OrderManager::erase(int id) {
     return false;
 }
 
 order OrderManager::get_order() const {
     return my_order;
+}
+
+std::vector<std::vector<std::string>> OrderManager::get(int id) {
+    return std::vector<std::vector<std::string>>();
 }

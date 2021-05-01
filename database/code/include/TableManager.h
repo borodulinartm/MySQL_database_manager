@@ -19,7 +19,7 @@ public:
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 
     std::vector<std::string> to_vector();
@@ -30,14 +30,14 @@ private:
     cafe my_cafe;
 public:
     CafeManager();
-    CafeManager(cafe _my_cafe);
+    explicit CafeManager(cafe _my_cafe);
 
     // Геттер
     cafe get_cafe() const;
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 
@@ -46,14 +46,14 @@ private:
     queue my_queue;
 public:
     QueueManager();
-    QueueManager(queue _my_queue);
+    explicit QueueManager(queue _my_queue);
 
     // Геттер
     queue get_queue() const;
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 
@@ -62,14 +62,14 @@ private:
     std::vector<list_food> my_list_food;
 public:
     ListFoodManager();
-    ListFoodManager(std::vector<list_food> _my_list_food);
+    explicit ListFoodManager(std::vector<list_food> _my_list_food);
 
     // Геттер
     std::vector<list_food> get_list_food();
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 
@@ -78,14 +78,14 @@ private:
     food my_food;
 public:
     FoodManager();
-    FoodManager(food my_food);
+    explicit FoodManager(food my_food);
 
     // Геттер
     food get_food() const;
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 
@@ -94,14 +94,14 @@ private:
     order my_order;
 public:
     OrderManager();
-    OrderManager(order _my_order);
+    explicit OrderManager(order _my_order);
 
     // Геттер
     order get_order() const;
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 
@@ -110,14 +110,14 @@ private:
     location my_location;
 public:
     LocationManager();
-    LocationManager(location _my_location);
+    explicit LocationManager(location _my_location);
 
     // Геттер
     location get_location() const;
 
     // Переопределённые методы
     bool add(std::string data) override;
-    std::string get(int id) override;
+    std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
 };
 

@@ -1,7 +1,7 @@
 #include "Data.h"
 
 // Даный метод возвращает все столбцы данной таблицы
-std::vector<std::pair<std::string, std::string>> client::get_columns() {
+std::vector<std::pair<std::string, std::string>> client::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
 
     cols.emplace_back("id", "INT");
@@ -11,5 +11,10 @@ std::vector<std::pair<std::string, std::string>> client::get_columns() {
     cols.emplace_back("password", "VARCHAR(30)");
     cols.emplace_back("registration_code", "INT");
 
+    return cols;
+}
+
+std::vector <std::string> client::get_cols() {
+    std::vector<std::string> cols = {"id", "name", "login", "password", "registration_code"};
     return cols;
 }

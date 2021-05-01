@@ -14,14 +14,14 @@ bool CafeManager::add(std::string data) {
     return false;
 }
 
-std::string CafeManager::get(int id) {
-    return std::string();
-}
-
 bool CafeManager::erase(int id) {
     return false;
 }
 
 cafe CafeManager::get_cafe() const {
     return cafe();
+}
+
+std::vector<std::vector<std::string>> CafeManager::get(int id) {
+    return std::vector<std::vector<std::string>>();
 }

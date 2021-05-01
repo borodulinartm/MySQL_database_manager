@@ -10,10 +10,6 @@ bool QueueManager::add(std::string data) {
     return false;
 }
 
-std::string QueueManager::get(int id) {
-    return std::string();
-}
-
 bool QueueManager::erase(int id) {
     return false;
 }
@@ -22,3 +18,6 @@ queue QueueManager::get_queue() const {
     return my_queue;
 }
 
+std::vector<std::vector<std::string>> QueueManager::get(int id) {
+    return std::vector<std::vector<std::string>>();
+}

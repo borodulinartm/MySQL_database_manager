@@ -31,7 +31,7 @@ bool DatabaseManager::_connectToUser() {
         connection = driver->connect(ADDRESS, USER_NAME, PASSWORD);
         std::cout << "CONNECT: SUCCESS\n";
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
         return false;
     }
     is_connected_to_user = true;
@@ -44,30 +44,21 @@ bool DatabaseManager::_disconnectToUser() {
         std::cout << "DICONNECT: SUCCESS\n";
         return true;
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
     return false;
 }
 
-void DatabaseManager::PrintError(sql::SQLException &exception) {
+void DatabaseManager::PrintError(sql::SQLException &exception, std::string function, int line) {
     std::cout << "# ERROR: SQLException in " << __FILE__;
-    std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
+    std::cout << "(FUNCTION: " << function << ") on line " << line << std::endl;
     std::cout << "Info: " << exception.what() << std::endl;
     std::cout << "Code: " << exception.getErrorCode() << std::endl;
     std::cout << "SQLState: " << exception.getSQLState() << std::endl;
 }
 
-void DatabaseManager::SetQuery(const std::string& _query, bool add_database_name) {
-    if (add_database_name) {
-        query = _query + " " + DATABASE_NAME;
-    } else {
-        query = _query;
-    }
-}
-
 // Database functions
-
 bool DatabaseManager::is_connected_to_db() const {
     return is_connected_to_database;
 }
@@ -82,14 +73,17 @@ bool DatabaseManager::connect_to_db() {
         is_connected_to_database = true;
         return is_connected_to_database;
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
     return false;
 }
 
 bool DatabaseManager::create_db() {
-    SetQuery("CREATE DATABASE", true);
+//    SetQuery("CREATE DATABASE", true);
+    query = "CREATE DATABASE ";
+    query += DATABASE_NAME;
+
     if (!is_connected_to_user) {
         _connectToUser();
     }
@@ -98,7 +92,7 @@ bool DatabaseManager::create_db() {
         statement = connection->createStatement();
         statement->execute(query);
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
         return false;
     }
     return true;
@@ -111,7 +105,7 @@ bool DatabaseManager::is_db_exists() {
     }
 
     try {
-        SetQuery("SHOW DATABASES", false);
+        query = "SHOW DATABASES";
         statement = connection->createStatement();
         resultSet = statement->executeQuery(query);
 
@@ -122,7 +116,7 @@ bool DatabaseManager::is_db_exists() {
             }
         }
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
     return false;
@@ -134,7 +128,7 @@ bool DatabaseManager::is_table_exists(const std::string& table) {
     }
 
     try {
-        SetQuery("SHOW TABLES", false);
+        query = "SHOW TABLES";
         statement = connection->createStatement();
         resultSet = statement->executeQuery(query);
 
@@ -145,7 +139,7 @@ bool DatabaseManager::is_table_exists(const std::string& table) {
             }
         }
     } catch (sql::SQLException &exception) {
-        PrintError(exception);
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
     return false;
@@ -158,50 +152,62 @@ bool DatabaseManager::create_table(const std::string& table_name,
         connect_to_db();
     }
 
-    query = "CREATE TABLE " + table_name + "(";
-    for(size_t i = 0; i < columns.size(); ++i) {
-        query += columns[i].first + " " + columns[i].second;
-        if (i != columns.size() - 1) {
-            query += ", ";
+    try {
+        query = "CREATE TABLE " + table_name + "(";
+        for(size_t i = 0; i < columns.size(); ++i) {
+            query += columns[i].first + " " + columns[i].second;
+            if (i != columns.size() - 1) {
+                query += ", ";
+            }
         }
+
+        query += ")";
+
+        statement = connection->createStatement();
+        statement->execute(query);
+
+        return true;
+    } catch(sql::SQLException &exception) {
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
-    query += ")";
-
-    statement = connection->createStatement();
-    statement->execute(query);
-
-    return true;
+    return false;
 }
 
 // Вставка данных в таблицу (будет работать для любого типа таблицы)
 bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std::string> &data) {
-    query = "INSERT INTO " + table_name + " VALUES(";
-    for(size_t i = 0; i < data.size(); ++i) {
-        if (i != data.size() - 1) {
-            query += "?,";
-        } else {
-            query += "?";
-        }
-    }
-
-    query += ")";
-
-    preparedStatement = connection->prepareStatement(query);
-    int count = 1;
-
-    for(auto & i : data) {
-        if (is_digit(i)) {
-            preparedStatement->setInt(count, std::stoi(i));
-        } else {
-            preparedStatement->setString(count, i);
+    try {
+        query = "INSERT INTO " + table_name + " VALUES(";
+        for(size_t i = 0; i < data.size(); ++i) {
+            if (i != data.size() - 1) {
+                query += "?,";
+            } else {
+                query += "?";
+            }
         }
 
-        ++count;
+        query += ")";
+
+        preparedStatement = connection->prepareStatement(query);
+        int count = 1;
+
+        for(auto & i : data) {
+            if (is_digit(i)) {
+                preparedStatement->setInt(count, std::stoi(i));
+            } else {
+                preparedStatement->setString(count, i);
+            }
+
+            ++count;
+        }
+
+        preparedStatement->executeUpdate();
+        return true;
+    } catch (sql::SQLException &exception) {
+        PrintError(exception, __FUNCTION__, __LINE__);
     }
 
-    preparedStatement->executeUpdate();
-    return true;
+    return false;
 }
 
 bool DatabaseManager::is_digit(std::string &str) {
@@ -210,4 +216,31 @@ bool DatabaseManager::is_digit(std::string &str) {
             return !std::isdigit(c);
         }
     ) == str.end();
+}
+
+// Извлечение данных
+std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::string &table_name,
+                                        std::vector<std::string> cols) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    query = "SELECT * FROM " + table_name;
+
+    statement = connection->createStatement();
+    resultSet = statement->executeQuery(query);
+
+    std::vector<std::vector<std::string>> data;
+    std::vector<std::string> row;
+
+    while (resultSet->next()) {
+        for(auto &col : cols) {
+            row.push_back(resultSet->getString(col));
+        }
+
+        data.push_back(row);
+        row.clear();
+    }
+
+    return data;
 }

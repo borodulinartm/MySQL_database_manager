@@ -23,7 +23,7 @@ bool ClientManager::add(std::string data) {
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
-        auto cols = client::get_columns();
+        auto cols = client::get_cols_sql();
         dbManager.create_table(table_name, cols);
     }
 
@@ -33,8 +33,12 @@ bool ClientManager::add(std::string data) {
     return true;
 }
 
-std::string ClientManager::get(int id) {
-    return std::string();
+std::vector<std::vector<std::string>> ClientManager::get(int id) {
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+         table_name, client::get_cols()
+    );
+
+    return to_return;
 }
 
 bool ClientManager::erase(int id) {

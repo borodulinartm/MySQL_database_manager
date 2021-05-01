@@ -14,6 +14,7 @@ protected:
     virtual bool is_db_exists() = 0;
 
     virtual bool insert_data(const std::string& table_name, std::vector<std::string> &data) = 0;
+    virtual std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) = 0;
 };
 
 #endif //UNTITLED_MY_INTERFACE_H
