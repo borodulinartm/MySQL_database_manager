@@ -16,6 +16,7 @@ protected:
     virtual bool insert_data(const std::string& table_name, std::vector<std::string> &data) = 0;
     virtual std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) = 0;
     virtual bool delete_data(std::string &table_name, int id) = 0;
+    virtual bool update_data(std::string &table_name, std::pair<std::string, std::string> &val, int id) = 0;
 };
 
 #endif //UNTITLED_MY_INTERFACE_H
