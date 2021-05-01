@@ -3,7 +3,6 @@
 #include "TableManager.h"
 
 int main() {
-
     DatabaseManager databaseManager;
     client cl = {1, "Artem", "@bus", "thth1234", 1};
     ClientManager clientManager(cl);
@@ -18,6 +17,10 @@ int main() {
         std::cout << std::endl;
     }
 
-    clientManager.update(1, "name", "Artemida");
+    std::vector<std::pair<std::string, std::string>> data_to_update;
+
+    data_to_update.emplace_back("name", "Artemida");
+    data_to_update.emplace_back("login", "@bbbbus");
+    clientManager.update(1, data_to_update);
     return 0;
 }

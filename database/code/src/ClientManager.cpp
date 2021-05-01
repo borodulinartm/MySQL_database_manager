@@ -45,11 +45,6 @@ bool ClientManager::erase(int id) {
     return dbManager.delete_data(table_name, id);
 }
 
-bool ClientManager::update(int id, const std::string& col_name, const std::string& col_value) {
-    std::pair<std::string, std::string> pair = std::make_pair(col_name, col_value);
-    return dbManager.update_data(table_name, pair, id);
-}
-
 std::vector<std::string> ClientManager::to_vector() {
     std::vector<std::string> to_return = {
             std::to_string(my_client.user_id),
@@ -60,4 +55,8 @@ std::vector<std::string> ClientManager::to_vector() {
     };
 
     return to_return;
+}
+
+bool ClientManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    return dbManager.update_data(table_name, val, id);
 }

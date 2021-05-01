@@ -21,7 +21,7 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, const std::string& col_name, const std::string& col_value);
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val);
 
     std::vector<std::string> to_vector();
 };

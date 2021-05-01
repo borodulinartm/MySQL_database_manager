@@ -270,17 +270,24 @@ bool DatabaseManager::delete_data(std::string &table_name, int id) {
 }
 
 // Метод осуществляет обновление конкретного столбца (не всей строки)
-bool DatabaseManager::update_data(std::string &table_name, std::pair<std::string, std::string> &val, int id) {
+bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) {
     if (!is_connected_to_database) {
         connect_to_db();
     }
 
     try {
-        query = "UPDATE " + table_name + " SET " + val.first + "=";
-        if (is_digit(val.second)) {
-            query += val.second;
-        } else {
-            query += "\"" + val.second + "\"";
+        query = "UPDATE " + table_name + " SET ";
+        for(size_t i = 0; i < val.size(); ++i) {
+            query += val[i].first + "=";
+            if (is_digit(val[i].second)) {
+                query += val[i].second;
+            } else {
+                query += "\"" + val[i].second + "\"";
+            }
+
+            if (i != val.size() - 1) {
+                query += ", ";
+            }
         }
 
         query += " WHERE id=" + std::to_string(id);
