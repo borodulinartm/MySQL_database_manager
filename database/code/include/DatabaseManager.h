@@ -42,7 +42,7 @@ public:
     bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns);
 
 private:
-    // Указатели, которые нужно будет превратить в smart pointers
+    // Указатели, которые не работают в режиме smart pointers
     sql::Driver *driver;
     sql::Connection *connection;
     sql::Statement *statement;

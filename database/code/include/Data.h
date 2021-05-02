@@ -20,6 +20,9 @@ struct list_food {
     int id_food;
     int count_buying;
     int total_cost;
+
+    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
+    static std::vector<std::string> get_cols();
 };
 
 struct order {

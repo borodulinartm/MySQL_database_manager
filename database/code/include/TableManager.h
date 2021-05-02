@@ -60,18 +60,23 @@ public:
 
 class ListFoodManager: public DatabaseManager, ITableManager {
 private:
-    std::vector<list_food> my_list_food;
+    list_food my_list_food;
+    DatabaseManager dbManager;
+    std::string table_name;
 public:
     ListFoodManager();
-    explicit ListFoodManager(std::vector<list_food> _my_list_food);
+    explicit ListFoodManager(list_food _my_list_food);
 
     // Геттер
-    std::vector<list_food> get_list_food();
+    list_food get_list_food();
 
     // Переопределённые методы
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val);
+
+    std::vector<std::string> to_vector();
 };
 
 class FoodManager: public DatabaseManager, ITableManager {

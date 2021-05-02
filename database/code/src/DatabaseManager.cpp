@@ -80,7 +80,6 @@ bool DatabaseManager::connect_to_db() {
 }
 
 bool DatabaseManager::create_db() {
-//    SetQuery("CREATE DATABASE", true);
     query = "CREATE DATABASE ";
     query += DATABASE_NAME;
 
