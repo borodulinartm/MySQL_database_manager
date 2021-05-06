@@ -2,25 +2,10 @@
 #define UNTITLED_DB_MANAGER_H
 
 #include "IDatabaseManager.h"
-#include "Data.h"
-
-#include <mysql_driver.h>
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/statement.h>
-#include <cppconn/resultset.h>
-#include <cppconn/prepared_statement.h>
 
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <vector>
-
-#define ADDRESS "localhost"
-#define USER_NAME "artem"
-#define PASSWORD "!School211410l"
-#define DATABASE_NAME "testdb"
-
 
 class DatabaseManager: public IDatabaseManager {
 public:
@@ -35,11 +20,11 @@ public:
 
     bool insert_data(const std::string& table_name, std::vector<std::string> &data) override;
     std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) override;
-    virtual bool delete_data(std::string &table_name, int id) override;
-    virtual bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) override;
+    bool delete_data(std::string &table_name, int id) override;
+    bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) override;
 
-    bool is_table_exists(const std::string& table);
-    bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns);
+    bool is_table_exists(const std::string& table) override;
+    bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns) override;
 
 private:
     // Указатели, которые не работают в режиме smart pointers
