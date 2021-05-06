@@ -12,7 +12,7 @@ set(LIB_SOURCE_FILES
         code/src/DataManager.cpp code/src/SupplierManager.cpp
 )
 
-add_library(database STATIC ${LIB_SOURCE_FILES})
+add_library(database SHARED ${LIB_SOURCE_FILES})
 
 set(FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR /usr/local/mysql/connector-c++-)
 include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include)

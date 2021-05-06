@@ -4,8 +4,8 @@
 
 int main() {
     DatabaseManager databaseManager;
-    supplier cl = {1, 2, "Vasya", "@bla-bla", "thth1234", 185};
-    list_food lf = {1, 1, 3, 100};
+    supplier cl(1,2, "Vasya", "@bus", "dedf", 2);
+    list_food lf(1, 1, 3, 100);
 
     SupplierManager supplierManager(cl);
     ListFoodManager listFoodManager(lf);
@@ -34,7 +34,7 @@ int main() {
     std::vector<std::pair<std::string, std::string>> data_to_update;
     std::vector<std::pair<std::string, std::string>> data_to_update_2;
 
-    data_to_update.emplace_back("name", "VASIK");
+    data_to_update.emplace_back("name", "ARTEM");
     data_to_update.emplace_back("login", "@bbbbus");
 
     data_to_update_2.emplace_back("count_buying", std::to_string(333));

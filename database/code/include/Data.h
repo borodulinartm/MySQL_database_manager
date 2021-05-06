@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "IData.h"
+
 struct people_info {
     std::string name;
     std::string login;
@@ -11,31 +13,41 @@ struct people_info {
     int registration_code;
 };
 
-struct client {
+struct client: public wrapper {
     int user_id = 0;
     people_info peopleInfo;
 
-    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
-    static std::vector<std::string> get_cols();
+    client(int _user_id, std::string _name, std::string _login, std::string _password, int _code);
+    client() = default;
+
+    std::vector<std::pair<std::string, std::string>> get_cols_sql() override;
+    std::vector<std::string> get_cols() override;
 };
 
-struct supplier {
-    int supplier_id;
-    int cafe_id;
+struct supplier: public wrapper {
+    int supplier_id = 0;
+    int cafe_id = 0;
     people_info peopleInfo;
 
-    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
-    static std::vector<std::string> get_cols();
+    supplier(int _supplier_id, int _cafe_id,
+             std::string _name, std::string _login, std::string _password, int _code);
+    supplier() = default;
+
+    std::vector<std::pair<std::string, std::string>> get_cols_sql() override;
+    std::vector<std::string> get_cols() override;
 };
 
-struct list_food {
-    int id_products;
-    int id_food;
-    int count_buying;
-    int total_cost;
+struct list_food: public wrapper {
+    int id_products = 0;
+    int id_food = 0;
+    int count_buying = 0;
+    int total_cost = 0;
 
-    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
-    static std::vector<std::string> get_cols();
+    list_food(int _id_products, int _id_food, int _count_buying, int _total_cost);
+    list_food() = default;
+
+    std::vector<std::pair<std::string, std::string>> get_cols_sql() override;
+    std::vector<std::string> get_cols() override;
 };
 
 struct order {

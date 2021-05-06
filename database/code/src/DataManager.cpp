@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "Data.h"
 
 // Таблица "Клиенты"
@@ -18,6 +20,14 @@ std::vector<std::pair<std::string, std::string>> client::get_cols_sql() {
 std::vector <std::string> client::get_cols() {
     std::vector<std::string> cols = {"id", "name", "login", "password", "registration_code"};
     return cols;
+}
+
+client::client(int _user_id, std::string _name, std::string _login, std::string _password, int _code):
+        user_id(_user_id) {
+    peopleInfo.name = std::move(_name);
+    peopleInfo.login = std::move(_login);
+    peopleInfo.password = std::move(_password);
+    peopleInfo.registration_code = _code;
 }
 
 // Таблица "Продавцы"
@@ -41,6 +51,14 @@ std::vector<std::pair<std::string, std::string>> supplier::get_cols_sql() {
     return cols;
 }
 
+supplier::supplier(int _supplier_id, int _cafe_id, std::string _name, std::string _login, std::string _password,
+                   int _code): supplier_id(_supplier_id), cafe_id(_cafe_id) {
+    peopleInfo.name = std::move(_name);
+    peopleInfo.login = std::move(_login);
+    peopleInfo.password = std::move(_password);
+    peopleInfo.registration_code = _code;
+}
+
 // Таблица "Список еды"
 
 std::vector<std::pair<std::string, std::string>> list_food::get_cols_sql() {
@@ -59,3 +77,6 @@ std::vector<std::string> list_food::get_cols() {
     return cols;
 }
 
+list_food::list_food(int _id_products, int _id_food, int _count_buying, int _total_cost):
+    id_products(_id_products), id_food(_id_food), count_buying(_count_buying), total_cost(_total_cost) {
+}
