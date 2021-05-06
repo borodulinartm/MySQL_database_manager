@@ -26,6 +26,25 @@ public:
     std::vector<std::string> to_vector();
 };
 
+class SupplierManager: public ITableManager {
+private:
+    DatabaseManager dbManager;
+    std::string table_name;
+    supplier my_supplier;
+
+public:
+    SupplierManager(const DatabaseManager& _dbManager, supplier _my_supplier);
+    explicit SupplierManager(supplier _my_supplier);
+
+    // Переопределённые методы
+    bool add(std::string data) override;
+    std::vector<std::vector<std::string>> get(int id) override;
+    bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val);
+
+    std::vector<std::string> to_vector();
+};
+
 class CafeManager: public DatabaseManager, ITableManager {
 private:
     cafe my_cafe;

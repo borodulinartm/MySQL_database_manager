@@ -5,7 +5,6 @@
 
 ClientManager::ClientManager(const DatabaseManager& _dbManager, client _my_client): dbManager(_dbManager),
                 table_name("clients"), my_client(std::move(_my_client)) {
-    dbManager = _dbManager;
 };
 
 ClientManager::ClientManager(client _my_client): table_name("clients"),
@@ -48,10 +47,10 @@ bool ClientManager::erase(int id) {
 std::vector<std::string> ClientManager::to_vector() {
     std::vector<std::string> to_return = {
             std::to_string(my_client.user_id),
-            my_client.name,
-            my_client.login,
-            my_client.password,
-            std::to_string(my_client.registration_code)
+            my_client.peopleInfo.name,
+            my_client.peopleInfo.login,
+            my_client.peopleInfo.password,
+            std::to_string(my_client.peopleInfo.registration_code)
     };
 
     return to_return;

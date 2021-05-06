@@ -4,16 +4,16 @@
 
 int main() {
     DatabaseManager databaseManager;
-    client cl = {1, "Artem", "@bus", "thth1234", 1};
+    supplier cl = {1, 2, "Vasya", "@bla-bla", "thth1234", 185};
     list_food lf = {1, 1, 3, 100};
 
-    ClientManager clientManager(cl);
+    SupplierManager supplierManager(cl);
     ListFoodManager listFoodManager(lf);
 
-    clientManager.add("frfrf");
+    supplierManager.add("frfrf");
     listFoodManager.add("ggggggt");
 
-    auto big_data = clientManager.get(0);
+    auto big_data = supplierManager.get(0);
     auto big_data_2 = listFoodManager.get(0);
     for(auto & i : big_data) {
         for(auto & j : i) {
@@ -34,12 +34,12 @@ int main() {
     std::vector<std::pair<std::string, std::string>> data_to_update;
     std::vector<std::pair<std::string, std::string>> data_to_update_2;
 
-    data_to_update.emplace_back("name", "Artemida");
+    data_to_update.emplace_back("name", "VASIK");
     data_to_update.emplace_back("login", "@bbbbus");
 
     data_to_update_2.emplace_back("count_buying", std::to_string(333));
 
-    clientManager.update(1, data_to_update);
+    supplierManager.update(1, data_to_update);
     listFoodManager.update(1, data_to_update_2);
     return 0;
 }

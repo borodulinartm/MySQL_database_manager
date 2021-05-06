@@ -4,12 +4,25 @@
 #include <string>
 #include <vector>
 
-struct client {
-    int user_id;
+struct people_info {
     std::string name;
     std::string login;
     std::string password;
     int registration_code;
+};
+
+struct client {
+    int user_id = 0;
+    people_info peopleInfo;
+
+    static std::vector<std::pair<std::string, std::string>> get_cols_sql();
+    static std::vector<std::string> get_cols();
+};
+
+struct supplier {
+    int supplier_id;
+    int cafe_id;
+    people_info peopleInfo;
 
     static std::vector<std::pair<std::string, std::string>> get_cols_sql();
     static std::vector<std::string> get_cols();
