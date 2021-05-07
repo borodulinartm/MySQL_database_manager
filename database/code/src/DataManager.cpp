@@ -134,20 +134,20 @@ std::vector<std::pair<std::string, std::string>> cafe::get_cols_sql() {
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("id_location", "INT");
     cols.emplace_back("id_food", "INT");
-    cols.emplace_back("count_eat", "INT");
+    cols.emplace_back("count_food", "INT");
 
     return cols;
 }
 
-// Таблица "Заказ"
-
 std::vector<std::string> cafe::get_cols() {
-    std::vector<std::string> cols = {"id", "id_location", "id_food", "count_eat"};
+    std::vector<std::string> cols = {"id", "id_location", "id_food", "count_food"};
     return cols;
 }
 
 cafe::cafe(): id_cafe(0), id_location(0), id_food(0), count_food(0) {
 }
+
+// Таблица "Заказ"
 
 order::order(int _id_order, int _id_cafe, int _id_user, int _id_products, int _id_slot, int _total_cost, int _stage,
              int _id_supplier): id_order(_id_order), id_cafe(_id_cafe), id_user(_id_user), id_products(_id_products),

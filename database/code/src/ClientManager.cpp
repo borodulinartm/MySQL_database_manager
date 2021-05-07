@@ -55,5 +55,13 @@ std::vector<std::string> ClientManager::to_vector() {
 }
 
 bool ClientManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
+
     return dbManager.update_data(table_name, val, id);
 }

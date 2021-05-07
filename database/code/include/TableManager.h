@@ -61,6 +61,9 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+
+    std::vector<std::string> to_vector();
 };
 
 class QueueManager: public DatabaseManager, ITableManager {
