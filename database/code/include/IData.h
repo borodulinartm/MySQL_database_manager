@@ -4,7 +4,18 @@
 #include <string>
 #include <vector>
 
-struct wrapper {
+enum WHERE_USE {
+    CAFE,
+    DINING_ROOM
+};
+
+enum TYPE_BUILDING {
+    GZ,
+    ULK,
+    SK,
+};
+
+struct IDataManager {
     virtual std::vector<std::pair<std::string, std::string>> get_cols_sql() = 0;
     virtual std::vector<std::string> get_cols() = 0;
 };

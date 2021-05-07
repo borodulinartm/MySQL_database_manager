@@ -18,6 +18,11 @@ public:
     ClientManager(const DatabaseManager& _dbManager, client _my_client);
     explicit ClientManager(client _my_client);
 
+    // Геттер
+    client get_client() const;
+    DatabaseManager get_database_manager() const;
+    bool add(client _client);
+
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
@@ -38,12 +43,17 @@ public:
     SupplierManager(const DatabaseManager& _dbManager, supplier _my_supplier);
     explicit SupplierManager(supplier _my_supplier);
 
+    // Геттеры
+    supplier get_supplier() const;
+    DatabaseManager get_database_manager() const;
+    bool add(supplier _supplier);
+
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
 
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
     std::vector<std::string> to_vector();
 };
 
@@ -60,6 +70,8 @@ public:
 
     // Геттер
     cafe get_cafe() const;
+    DatabaseManager get_database_manager() const;
+    bool add(cafe _cafe);
 
     // Переопределённые методы
     bool add() override;
@@ -83,6 +95,8 @@ public:
 
     // Геттер
     location get_location() const;
+    DatabaseManager get_database_manager() const;
+    bool add(location _location);
 
     // Переопределённые методы
     bool add() override;
@@ -106,6 +120,8 @@ public:
 
     // Геттер
     queue get_queue() const;
+    DatabaseManager get_database_manager() const;
+    bool add(queue _queue);
 
     // Переопределённые методы
     bool add() override;
@@ -129,6 +145,8 @@ public:
 
     // Геттер
     list_food get_list_food();
+    DatabaseManager get_database_manager() const;
+    bool add(list_food _list_food);
 
     // Переопределённые методы
     bool add() override;
@@ -152,6 +170,8 @@ public:
 
     // Геттер
     food get_food() const;
+    DatabaseManager get_database_manager() const;
+    bool add(food _my_food);
 
     // Переопределённые методы
     bool add() override;
@@ -175,6 +195,8 @@ public:
 
     // Геттер
     order get_order() const;
+    DatabaseManager get_database_manager() const;
+    bool add(order _order);
 
     // Переопределённые методы
     bool add() override;

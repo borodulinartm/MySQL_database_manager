@@ -69,3 +69,12 @@ void OrderManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool OrderManager::add(order _order) {
+    my_order = std::move(_order);
+    return add();
+}
+
+DatabaseManager OrderManager::get_database_manager() const {
+    return dbManager;
+}

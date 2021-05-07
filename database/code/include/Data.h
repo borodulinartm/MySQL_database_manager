@@ -6,7 +6,7 @@
 
 #include "IData.h"
 
-//! Конструкторы надо определять с инициализацией данных
+std::string get_from_enum(int type);
 
 struct people_info {
     std::string name;
@@ -15,7 +15,7 @@ struct people_info {
     int registration_code;
 };
 
-struct client: public wrapper {
+struct client: public IDataManager {
     int user_id;
     people_info peopleInfo;
 
@@ -26,7 +26,7 @@ struct client: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct supplier: public wrapper {
+struct supplier: public IDataManager {
     int supplier_id;
     int cafe_id;
     people_info peopleInfo;
@@ -39,7 +39,7 @@ struct supplier: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct list_food: public wrapper {
+struct list_food: public IDataManager {
     int id_products;
     int id_food;
     int count_buying;
@@ -52,7 +52,7 @@ struct list_food: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct location: public wrapper {
+struct location: public IDataManager {
     int id_location;
     std::string type_building;
     int floor;
@@ -64,7 +64,7 @@ struct location: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct cafe: public wrapper {
+struct cafe: public IDataManager {
     int id_cafe;
     int id_location;
     int id_food;
@@ -77,7 +77,7 @@ struct cafe: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct order: public wrapper {
+struct order: public IDataManager {
     int id_order;
     int id_cafe;
     int id_user;
@@ -95,7 +95,7 @@ struct order: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct food: public wrapper {
+struct food: public IDataManager {
     int id_food;
     std::string name_eat;
     int cost;
@@ -108,7 +108,7 @@ struct food: public wrapper {
     std::vector<std::string> get_cols() override;
 };
 
-struct queue: public wrapper {
+struct queue: public IDataManager {
     int id_slot;
     int hour;
     int minute;

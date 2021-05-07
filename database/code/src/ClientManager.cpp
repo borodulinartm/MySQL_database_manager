@@ -64,3 +64,16 @@ void ClientManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool ClientManager::add(client _client) {
+    my_client = std::move(_client);
+    return add();
+}
+
+client ClientManager::get_client() const {
+    return my_client;
+}
+
+DatabaseManager ClientManager::get_database_manager() const {
+    return dbManager;
+}

@@ -68,3 +68,12 @@ void QueueManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool QueueManager::add(queue _queue) {
+    my_queue = std::move(_queue);
+    return add();
+}
+
+DatabaseManager QueueManager::get_database_manager() const {
+    return dbManager;
+}

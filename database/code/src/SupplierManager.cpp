@@ -67,3 +67,16 @@ void SupplierManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool SupplierManager::add(supplier _supplier) {
+    my_supplier = std::move(_supplier);
+    return add();
+}
+
+supplier SupplierManager::get_supplier() const {
+    return my_supplier;
+}
+
+DatabaseManager SupplierManager::get_database_manager() const {
+    return dbManager;
+}

@@ -65,3 +65,12 @@ void LocationManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool LocationManager::add(location _location) {
+    my_location = std::move(_location);
+    return add();
+}
+
+DatabaseManager LocationManager::get_database_manager() const {
+    return dbManager;
+}

@@ -65,3 +65,12 @@ void ListFoodManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool ListFoodManager::add(list_food _list_food) {
+    my_list_food = std::move(_list_food);
+    return add();
+}
+
+DatabaseManager ListFoodManager::get_database_manager() const {
+    return dbManager;
+}

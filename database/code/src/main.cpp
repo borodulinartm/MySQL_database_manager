@@ -1,6 +1,7 @@
 #include <iostream>
 #include "DatabaseManager.h"
 #include "TableManager.h"
+#include "Data.h"
 
 int main() {
     DatabaseManager databaseManager;
@@ -41,5 +42,11 @@ int main() {
 
     supplierManager.update(1, data_to_update);
     orderManager.update(0, data_to_update_2);
+
+    o.id_products = 2255;
+    o.id_order = 1;
+    orderManager.add(o);
+
+    std::cout << "I want to eat in " << get_from_enum(TYPE_BUILDING::ULK) << std::endl;
     return 0;
 }

@@ -65,3 +65,12 @@ void CafeManager::check_access() {
         dbManager.connect_to_db();
     }
 }
+
+bool CafeManager::add(cafe _cafe) {
+    my_cafe = std::move(_cafe);
+    return add();
+}
+
+DatabaseManager CafeManager::get_database_manager() const {
+    return dbManager;
+}

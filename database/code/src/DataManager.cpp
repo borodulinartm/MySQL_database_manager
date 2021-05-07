@@ -223,3 +223,26 @@ std::vector<std::string> queue::get_cols() {
 
 queue::queue(): id_slot(0), hour(0), minute(0) {
 }
+
+std::string get_from_enum(int type) {
+    std::string result;
+    switch (type) {
+        case TYPE_BUILDING::GZ:
+            result = "ГЗ";
+            break;
+
+        case TYPE_BUILDING::SK:
+            result = "СК";
+            break;
+
+        case TYPE_BUILDING::ULK:
+            result = "УЛК";
+            break;
+
+        default:
+            result = "";
+            break;
+    }
+
+    return result;
+}
