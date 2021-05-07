@@ -1,22 +1,15 @@
-#include <utility>
-
 #include "TableManager.h"
 
-ListFoodManager::ListFoodManager(): table_name("list_food") {
+ListFoodManager::ListFoodManager(const DatabaseManager& _dbManager, list_food _my_list_food):
+    table_name("list_food"), dbManager(_dbManager), my_list_food(std::move(_my_list_food)) {
 }
 
 ListFoodManager::ListFoodManager(list_food _my_list_food): my_list_food(std::move(_my_list_food)),
             table_name("list_food") {
 }
 
-bool ListFoodManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool ListFoodManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         auto cols = my_list_food.get_cols_sql();
@@ -30,6 +23,7 @@ bool ListFoodManager::add(std::string data) {
 }
 
 bool ListFoodManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
@@ -38,6 +32,7 @@ list_food ListFoodManager::get_list_food() {
 }
 
 std::vector<std::vector<std::string>> ListFoodManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_list_food.get_cols()
     );
@@ -57,5 +52,16 @@ std::vector<std::string> ListFoodManager::to_vector() {
 }
 
 bool ListFoodManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    check_access();
     return dbManager.update_data(table_name, val, id);
+}
+
+void ListFoodManager::check_access() {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
 }

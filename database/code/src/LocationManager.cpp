@@ -8,14 +8,8 @@ LocationManager::LocationManager(const DatabaseManager& _dbManager, location _my
         dbManager(_dbManager), my_location(std::move(_my_location)), table_name("location") {
 }
 
-bool LocationManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool LocationManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
@@ -30,6 +24,7 @@ bool LocationManager::add(std::string data) {
 }
 
 bool LocationManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
@@ -38,6 +33,7 @@ location LocationManager::get_location() const {
 }
 
 std::vector<std::vector<std::string>> LocationManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_location.get_cols()
     );
@@ -46,14 +42,7 @@ std::vector<std::vector<std::string>> LocationManager::get(int id) {
 }
 
 bool LocationManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
-
+    check_access();
     return dbManager.update_data(table_name, val, id);
 }
 
@@ -65,4 +54,14 @@ std::vector<std::string> LocationManager::to_vector() {
     };
 
     return to_return;
+}
+
+void LocationManager::check_access() {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
 }

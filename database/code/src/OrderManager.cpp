@@ -7,14 +7,8 @@ OrderManager::OrderManager(const DatabaseManager& _dbManager, order _my_order):
 OrderManager::OrderManager(order _my_order): table_name("booking"), my_order(std::move(_my_order)) {
 }
 
-bool OrderManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool OrderManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
@@ -29,6 +23,7 @@ bool OrderManager::add(std::string data) {
 }
 
 bool OrderManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
@@ -37,6 +32,7 @@ order OrderManager::get_order() const {
 }
 
 std::vector<std::vector<std::string>> OrderManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_order.get_cols()
     );
@@ -45,14 +41,7 @@ std::vector<std::vector<std::string>> OrderManager::get(int id) {
 }
 
 bool OrderManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
-
+    check_access();
     return dbManager.update_data(table_name, val, id);
 }
 
@@ -69,4 +58,14 @@ std::vector<std::string> OrderManager::to_vector() {
     };
 
     return to_return;
+}
+
+void OrderManager::check_access() {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
 }

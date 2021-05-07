@@ -10,8 +10,8 @@ int main() {
     SupplierManager supplierManager(cl);
     OrderManager orderManager(o);
 
-    supplierManager.add("frfrf");
-    orderManager.add("ggggggt");
+    supplierManager.add();
+    orderManager.add();
 
     auto big_data = supplierManager.get(0);
     auto big_data_2 = orderManager.get(0);

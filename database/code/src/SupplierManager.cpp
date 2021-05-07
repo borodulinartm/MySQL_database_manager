@@ -11,14 +11,8 @@ SupplierManager::SupplierManager(supplier _my_supplier): table_name("suppliers")
                                                          my_supplier(std::move(_my_supplier)) {
 }
 
-bool SupplierManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool SupplierManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
@@ -33,6 +27,7 @@ bool SupplierManager::add(std::string data) {
 }
 
 std::vector<std::vector<std::string>> SupplierManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_supplier.get_cols()
     );
@@ -41,10 +36,12 @@ std::vector<std::vector<std::string>> SupplierManager::get(int id) {
 }
 
 bool SupplierManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
 bool SupplierManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    check_access();
     return dbManager.update_data(table_name, val, id);
 }
 
@@ -59,4 +56,14 @@ std::vector<std::string> SupplierManager::to_vector() {
     };
 
     return to_return;
+}
+
+void SupplierManager::check_access() {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
 }

@@ -10,14 +10,8 @@ QueueManager::QueueManager(queue _my_queue): table_name("queue"),
     my_queue(std::move(_my_queue)) {
 }
 
-bool QueueManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool QueueManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
@@ -32,6 +26,7 @@ bool QueueManager::add(std::string data) {
 }
 
 bool QueueManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
@@ -40,6 +35,7 @@ queue QueueManager::get_queue() const {
 }
 
 std::vector<std::vector<std::string>> QueueManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_queue.get_cols()
     );
@@ -58,6 +54,12 @@ std::vector<std::string> QueueManager::to_vector() {
 }
 
 bool QueueManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    check_access();
+
+    return dbManager.update_data(table_name, val, id);
+}
+
+void QueueManager::check_access() {
     if (!dbManager.is_db_exists()) {
         dbManager.create_db();
     }
@@ -65,6 +67,4 @@ bool QueueManager::update(int id, std::vector<std::pair<std::string, std::string
     if (!dbManager.is_connected_to_db()) {
         dbManager.connect_to_db();
     }
-
-    return dbManager.update_data(table_name, val, id);
 }

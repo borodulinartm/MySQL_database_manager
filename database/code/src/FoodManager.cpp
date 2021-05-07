@@ -8,14 +8,8 @@ FoodManager::FoodManager(food _my_food): table_name("food"),
      my_food(std::move(_my_food)) {
 }
 
-bool FoodManager::add(std::string data) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
+bool FoodManager::add() {
+    check_access();
 
     if (!dbManager.is_table_exists(table_name)) {
         std::cout << "TABLE NOT EXIST\n";
@@ -30,6 +24,7 @@ bool FoodManager::add(std::string data) {
 }
 
 bool FoodManager::erase(int id) {
+    check_access();
     return dbManager.delete_data(table_name, id);
 }
 
@@ -38,6 +33,7 @@ food FoodManager::get_food() const {
 }
 
 std::vector<std::vector<std::string>> FoodManager::get(int id) {
+    check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_food.get_cols()
     );
@@ -46,14 +42,7 @@ std::vector<std::vector<std::string>> FoodManager::get(int id) {
 }
 
 bool FoodManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
-    if (!dbManager.is_db_exists()) {
-        dbManager.create_db();
-    }
-
-    if (!dbManager.is_connected_to_db()) {
-        dbManager.connect_to_db();
-    }
-
+    check_access();
     return dbManager.update_data(table_name, val, id);
 }
 
@@ -66,4 +55,14 @@ std::vector<std::string> FoodManager::to_vector() {
     };
 
     return to_return;
+}
+
+void FoodManager::check_access() {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
 }
