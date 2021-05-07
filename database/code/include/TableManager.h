@@ -153,8 +153,10 @@ public:
 class OrderManager: public DatabaseManager, ITableManager {
 private:
     order my_order;
+    DatabaseManager dbManager;
+    std::string table_name;
 public:
-    OrderManager();
+    OrderManager(const DatabaseManager& _dbManager, order _my_order);
     explicit OrderManager(order _my_order);
 
     // Геттер
@@ -164,6 +166,9 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+
+    std::vector<std::string> to_vector();
 };
 
 #endif //  DATABASE_TABLEMANAGER_H

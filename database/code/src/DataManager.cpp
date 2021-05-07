@@ -151,12 +151,12 @@ cafe::cafe(): id_cafe(0), id_location(0), id_food(0), count_food(0) {
 
 order::order(int _id_order, int _id_cafe, int _id_user, int _id_products, int _id_slot, int _total_cost, int _stage,
              int _id_supplier): id_order(_id_order), id_cafe(_id_cafe), id_user(_id_user), id_products(_id_products),
-             id_slot(_id_slot), total_cost(_total_cost), stage(_stage) {
+             id_slot(_id_slot), total_cost(_total_cost), stage(_stage), id_supplier(_id_supplier) {
 }
 
 std::vector<std::string> order::get_cols() {
     std::vector<std::string> cols = {"id", "id_cafe", "id_user", "id_products",
-                                     "id_slot", "total_cost", "stage"};
+                                     "id_slot", "total_cost", "stage", "id_supplier"};
     return cols;
 }
 
@@ -170,6 +170,7 @@ std::vector<std::pair<std::string, std::string>> order::get_cols_sql() {
     cols.emplace_back("id_slot", "INT");
     cols.emplace_back("total_cost", "INT");
     cols.emplace_back("stage", "INT");
+    cols.emplace_back("id_supplier", "INT");
 
     return cols;
 }

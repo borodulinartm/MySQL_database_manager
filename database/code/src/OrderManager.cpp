@@ -1,17 +1,35 @@
 #include "TableManager.h"
 
-OrderManager::OrderManager() {
+OrderManager::OrderManager(const DatabaseManager& _dbManager, order _my_order):
+    table_name("booking"), dbManager(_dbManager), my_order(std::move(_my_order)) {
 }
 
-OrderManager::OrderManager(order my_order) {
+OrderManager::OrderManager(order _my_order): table_name("booking"), my_order(std::move(_my_order)) {
 }
 
 bool OrderManager::add(std::string data) {
-    return false;
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
+
+    if (!dbManager.is_table_exists(table_name)) {
+        std::cout << "TABLE NOT EXIST\n";
+        auto cols = my_order.get_cols_sql();
+        dbManager.create_table(table_name, cols);
+    }
+
+    auto res = to_vector();
+    dbManager.insert_data(table_name, res);
+
+    return true;
 }
 
 bool OrderManager::erase(int id) {
-    return false;
+    return dbManager.delete_data(table_name, id);
 }
 
 order OrderManager::get_order() const {
@@ -19,5 +37,36 @@ order OrderManager::get_order() const {
 }
 
 std::vector<std::vector<std::string>> OrderManager::get(int id) {
-    return std::vector<std::vector<std::string>>();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name, my_order.get_cols()
+    );
+
+    return to_return;
+}
+
+bool OrderManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    if (!dbManager.is_db_exists()) {
+        dbManager.create_db();
+    }
+
+    if (!dbManager.is_connected_to_db()) {
+        dbManager.connect_to_db();
+    }
+
+    return dbManager.update_data(table_name, val, id);
+}
+
+std::vector<std::string> OrderManager::to_vector() {
+    std::vector<std::string> to_return = {
+            std::to_string(my_order.id_order),
+            std::to_string(my_order.id_cafe),
+            std::to_string(my_order.id_user),
+            std::to_string(my_order.id_products),
+            std::to_string(my_order.id_slot),
+            std::to_string(my_order.total_cost),
+            std::to_string(my_order.stage),
+            std::to_string(my_order.id_supplier)
+    };
+
+    return to_return;
 }

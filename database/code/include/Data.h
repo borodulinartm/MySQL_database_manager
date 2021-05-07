@@ -85,7 +85,7 @@ struct order: public wrapper {
     int id_slot;
     int total_cost;
     int stage;
-    int id_supplier{};
+    int id_supplier;
 
     order(int _id_order, int _id_cafe, int _id_user, int _id_products, int _id_slot, int _total_cost,
           int _stage, int _id_supplier);
