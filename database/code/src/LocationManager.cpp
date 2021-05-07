@@ -1,5 +1,3 @@
-#include <utility>
-
 #include "TableManager.h"
 
 LocationManager::LocationManager(location _my_location): table_name("location"),

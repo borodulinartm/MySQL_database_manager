@@ -90,8 +90,10 @@ public:
 class QueueManager: public DatabaseManager, ITableManager {
 private:
     queue my_queue;
+    std::string table_name;
+    DatabaseManager dbManager;
 public:
-    QueueManager();
+    QueueManager(const DatabaseManager& _dbManager, queue _my_queue);
     explicit QueueManager(queue _my_queue);
 
     // Геттер
@@ -101,6 +103,9 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+
+    std::vector<std::string> to_vector();
 };
 
 class ListFoodManager: public DatabaseManager, ITableManager {
@@ -127,9 +132,11 @@ public:
 class FoodManager: public DatabaseManager, ITableManager {
 private:
     food my_food;
+    DatabaseManager dbManager;
+    std::string table_name;
 public:
-    FoodManager();
-    explicit FoodManager(food my_food);
+    FoodManager(const DatabaseManager& _dbManager, food _my_food);
+    explicit FoodManager(food _my_food);
 
     // Геттер
     food get_food() const;
@@ -138,6 +145,9 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+
+    std::vector<std::string> to_vector();
 };
 
 class OrderManager: public DatabaseManager, ITableManager {

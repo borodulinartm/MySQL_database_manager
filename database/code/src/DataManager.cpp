@@ -201,12 +201,14 @@ std::vector<std::string> food::get_cols() {
 food::food(): id_food(0), name_eat(""), where_use(0) {
 }
 
+// Таблица "Очередь"
+
 queue::queue(int _id_slot, int _hour, int _minute): id_slot(_id_slot), hour(_hour), minute(_minute) {
 }
 
 std::vector<std::pair<std::string, std::string>> queue::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id_slot", "INT");
+    cols.emplace_back("id", "INT");
     cols.emplace_back("hour", "INT");
     cols.emplace_back("minute", "INT");
 
@@ -214,7 +216,7 @@ std::vector<std::pair<std::string, std::string>> queue::get_cols_sql() {
 }
 
 std::vector<std::string> queue::get_cols() {
-    std::vector<std::string> cols = {"id_slot", "hour", "minute"};
+    std::vector<std::string> cols = {"id", "hour", "minute"};
     return cols;
 }
 
