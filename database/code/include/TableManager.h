@@ -66,6 +66,27 @@ public:
     std::vector<std::string> to_vector();
 };
 
+class LocationManager: public DatabaseManager, ITableManager {
+private:
+    location my_location;
+    std::string table_name;
+    DatabaseManager dbManager;
+public:
+    LocationManager(const DatabaseManager& _dbManager, location _my_location);
+    explicit LocationManager(location _my_location);
+
+    // Геттер
+    location get_location() const;
+
+    // Переопределённые методы
+    bool add(std::string data) override;
+    std::vector<std::vector<std::string>> get(int id) override;
+    bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+
+    std::vector<std::string> to_vector();
+};
+
 class QueueManager: public DatabaseManager, ITableManager {
 private:
     queue my_queue;
@@ -133,23 +154,6 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-};
-
-class LocationManager: public DatabaseManager, ITableManager {
-private:
-    location my_location;
-public:
-    LocationManager();
-    explicit LocationManager(location _my_location);
-
-    // Геттер
-    location get_location() const;
-
-    // Переопределённые методы
-    bool add(std::string data) override;
-    std::vector<std::vector<std::string>> get(int id) override;
-    bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
 };
 
 #endif //  DATABASE_TABLEMANAGER_H
