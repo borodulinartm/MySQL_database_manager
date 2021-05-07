@@ -4,10 +4,11 @@
     * Логика будет описана в дальнейшем
 */
 
-CafeManager::CafeManager() {
+CafeManager::CafeManager(const DatabaseManager& _dbManager, cafe _my_cafe):
+    table_name("cafe"), dbManager(_dbManager), my_cafe(_my_cafe) {
 }
 
-CafeManager::CafeManager(cafe _my_cafe) {
+CafeManager::CafeManager(cafe _my_cafe): table_name("clients"), my_cafe(_my_cafe) {
 }
 
 bool CafeManager::add(std::string data) {
@@ -19,7 +20,7 @@ bool CafeManager::erase(int id) {
 }
 
 cafe CafeManager::get_cafe() const {
-    return cafe();
+    return my_cafe;
 }
 
 std::vector<std::vector<std::string>> CafeManager::get(int id) {

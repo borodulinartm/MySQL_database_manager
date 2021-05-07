@@ -10,6 +10,7 @@ public:
     virtual bool add(std::string data) = 0;
     virtual std::vector<std::vector<std::string>> get(int id) = 0;
     virtual bool erase(int id) = 0;
+    virtual bool update(int id, std::vector<std::pair<std::string, std::string>> &val) = 0;
 };
 
 #endif //DATABASE_ITABLEMANAGER_H

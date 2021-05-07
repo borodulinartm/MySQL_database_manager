@@ -1,9 +1,9 @@
 #include "TableManager.h"
 
-LocationManager::LocationManager() {
+LocationManager::LocationManager(location _my_location) {
 }
 
-LocationManager::LocationManager(location _) {
+LocationManager::LocationManager() {
 }
 
 bool LocationManager::add(std::string data) {
@@ -20,4 +20,8 @@ location LocationManager::get_location() const {
 
 std::vector<std::vector<std::string>> LocationManager::get(int id) {
     return std::vector<std::vector<std::string>>();
+}
+
+bool LocationManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+    return false;
 }

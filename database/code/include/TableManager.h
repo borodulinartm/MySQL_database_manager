@@ -21,7 +21,7 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val);
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
 
     std::vector<std::string> to_vector();
 };
@@ -40,7 +40,7 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val);
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
 
     std::vector<std::string> to_vector();
 };
@@ -48,8 +48,10 @@ public:
 class CafeManager: public DatabaseManager, ITableManager {
 private:
     cafe my_cafe;
+    std::string table_name;
+    DatabaseManager dbManager;
 public:
-    CafeManager();
+    CafeManager(const DatabaseManager& _dbManager, cafe _my_cafe);
     explicit CafeManager(cafe _my_cafe);
 
     // Геттер
@@ -144,6 +146,7 @@ public:
     bool add(std::string data) override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
+    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
 };
 
 #endif //  DATABASE_TABLEMANAGER_H
