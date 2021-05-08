@@ -7,7 +7,7 @@
 std::vector<std::pair<std::string, std::string>> client::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
 
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("name", "VARCHAR(30)");
     cols.emplace_back("login", "VARCHAR(50)");

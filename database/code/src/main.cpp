@@ -4,15 +4,56 @@
 #include "Data.h"
 
 int main() {
-    client my_client;
+    DatabaseManager databaseManager;
+    supplier cl(1,2, "Vasya", "@bus", "dedf", 2);
+    order o(0,2,3,4,5,6,7,8);
 
-    my_client.user_id = 1;
-    my_client.peopleInfo.name = "Artem";
-    my_client.peopleInfo.login = "@vrrf";
-    my_client.peopleInfo.password = "efeef";
-    my_client.peopleInfo.registration_code = 2;
+    SupplierManager supplierManager(cl);
+    OrderManager orderManager(o);
 
-    ClientManager clientManager(my_client);
-    clientManager.add();
+    supplierManager.add();
+    orderManager.add();
+
+    auto big_data = supplierManager.get(0);
+    auto big_data_2 = orderManager.get(0);
+    for(auto & i : big_data) {
+        for(auto & j : i) {
+            std::cout << j << " ";
+        }
+
+        std::cout << std::endl;
+    }
+
+    for(auto & i : big_data_2) {
+        for(auto & j : i) {
+            std::cout << j << " ";
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::vector<std::pair<std::string, std::string>> data_to_update;
+    std::vector<std::pair<std::string, std::string>> data_to_update_2;
+
+    data_to_update.emplace_back("name", "ARTEM");
+    data_to_update.emplace_back("login", "@bbbbus");
+
+    data_to_update_2.emplace_back("id_slot", std::to_string(320));
+
+    std::vector<std::pair<std::string, std::string>> cols, cols_2;
+
+    cols.emplace_back(std::make_pair("name", "Vasya"));
+    cols.emplace_back(std::make_pair("registration_code", "1"));
+
+    cols_2.emplace_back(std::make_pair("id_user", "2"));
+
+    supplierManager.update(data_to_update, cols);
+    orderManager.update(data_to_update_2, cols_2);
+
+    o.id_products = 2255;
+    o.id_order = 1;
+    orderManager.add(o);
+
+    std::cout << "I want to eat in " << get_from_enum(TYPE_BUILDING::ULK) << std::endl;
     return 0;
 }

@@ -18,7 +18,8 @@ public:
     bool is_db_exists() override;
     bool is_connected_to_db() const;
 
-    bool insert_data(const std::string& table_name, std::vector<std::string> &data) override;
+    bool insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
+                     bool ignore_first = false) override;
     std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) override;
     bool delete_data(std::string &table_name, int id) override;
     bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) override;

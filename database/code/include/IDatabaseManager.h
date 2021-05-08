@@ -27,7 +27,8 @@ protected:
     virtual bool is_table_exists(const std::string& table) = 0;
     virtual bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns) = 0;
 
-    virtual bool insert_data(const std::string& table_name, std::vector<std::string> &data) = 0;
+    virtual bool insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
+                             bool ignore_first = false) = 0;
     virtual std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) = 0;
     virtual bool delete_data(std::string &table_name, int id) = 0;
     virtual bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) = 0;

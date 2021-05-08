@@ -174,33 +174,35 @@ bool DatabaseManager::create_table(const std::string& table_name,
 }
 
 // Вставка данных в таблицу (будет работать для любого типа таблицы)
-bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std::string> &data) {
+bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
+                                  bool ignore_first) {
     try {
-        query = "INSERT INTO " + table_name + " VALUES(";
-        for(size_t i = 0; i < data.size(); ++i) {
-            if (i != data.size() - 1) {
-                query += "?,";
+        query = "INSERT INTO " + table_name + "(";
+        for(size_t i = ignore_first; i < cols.size(); ++i) {
+            query += cols[i];
+            if (i != cols.size() - 1) {
+                query += ",";
+            }
+        }
+
+        query += ") VALUES (";
+        for(size_t i = ignore_first; i < data.size(); ++i) {
+            if (is_digit(data[i])) {
+                query += data[i];
             } else {
-                query += "?";
+                query += "\"" + data[i] + "\"";
+            }
+
+            if (i != data.size() - 1) {
+                query += ",";
             }
         }
 
         query += ")";
 
-        preparedStatement = connection->prepareStatement(query);
-        int count = 1;
+        statement = connection->createStatement();
+        statement->execute(query);
 
-        for(auto & i : data) {
-            if (is_digit(i)) {
-                preparedStatement->setInt(count, std::stoi(i));
-            } else {
-                preparedStatement->setString(count, i);
-            }
-
-            ++count;
-        }
-
-        preparedStatement->executeUpdate();
         return true;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);

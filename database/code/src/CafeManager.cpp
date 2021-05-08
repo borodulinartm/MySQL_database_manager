@@ -17,7 +17,9 @@ bool CafeManager::add() {
     }
 
     auto res = to_vector();
-    dbManager.insert_data(table_name, res);
+    auto cols = my_cafe.get_cols();
+
+    dbManager.insert_data(table_name, cols, res);
 
     return true;
 }
