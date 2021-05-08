@@ -33,7 +33,7 @@ cafe CafeManager::get_cafe() const {
     return my_cafe;
 }
 
-std::vector<std::vector<std::string>> CafeManager::get(int id) {
+std::vector<std::vector<std::string>> CafeManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_cafe.get_cols()

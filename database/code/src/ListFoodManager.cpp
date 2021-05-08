@@ -33,7 +33,7 @@ list_food ListFoodManager::get_list_food() {
     return my_list_food;
 }
 
-std::vector<std::vector<std::string>> ListFoodManager::get(int id) {
+std::vector<std::vector<std::string>> ListFoodManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_list_food.get_cols()

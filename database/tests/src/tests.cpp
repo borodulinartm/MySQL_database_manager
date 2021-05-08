@@ -1,19 +1,35 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include <fstream>
 
 #include "TableManager.h"
 #include "test_utils.h"
 
 TEST(insert_data, insert) {
     client my_client = get_client();
-    ClientManager clManager(my_client);
-    std::cout << my_client.user_id << " " << my_client.peopleInfo.name << std::endl;
-    clManager.add();
+    ClientManager clientManager(my_client);
+    clientManager.add();
 }
 
 TEST(get_data, get) {
-    SUCCEED();
+    client my_client = get_client();
+
+    ClientManager clientManager(my_client);
+    bool is_good = false;
+    auto result = clientManager.get();
+
+    for (auto &i : result) {
+        if (is_equal(my_client, i)) {
+            is_good = true;
+        }
+    }
+
+    if (!is_good) {
+        FAIL() << "ERROR!!!";
+    }
+}
+
+TEST(delete_value, remove) {
+
 }
 
 int main(int argc, char *argv[]) {

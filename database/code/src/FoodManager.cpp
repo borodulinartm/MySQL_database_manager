@@ -34,7 +34,7 @@ food FoodManager::get_food() const {
     return my_food;
 }
 
-std::vector<std::vector<std::string>> FoodManager::get(int id) {
+std::vector<std::vector<std::string>> FoodManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_food.get_cols()

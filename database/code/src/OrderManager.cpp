@@ -33,7 +33,7 @@ order OrderManager::get_order() const {
     return my_order;
 }
 
-std::vector<std::vector<std::string>> OrderManager::get(int id) {
+std::vector<std::vector<std::string>> OrderManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_order.get_cols()

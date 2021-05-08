@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "TableManager.h"
 #include "Data.h"
 
@@ -26,10 +28,21 @@ bool ClientManager::add() {
     return true;
 }
 
-std::vector<std::vector<std::string>> ClientManager::get(int id) {
+std::vector<std::vector<std::string>> ClientManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
          table_name, my_client.get_cols()
+    );
+
+    return to_return;
+}
+
+std::vector<std::vector<std::string>> ClientManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_client.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
     );
 
     return to_return;

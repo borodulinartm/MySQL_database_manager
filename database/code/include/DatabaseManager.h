@@ -21,9 +21,9 @@ public:
     bool insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
                      bool ignore_first = false) override;
     std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) override;
+    std::vector<std::vector<std::string>> get_data(const std::string &table_name,
+                                                   std::vector<std::string> &cols, std::vector<std::pair<std::string, std::string>> condition) override;
     bool delete_data(std::string &table_name, int id) override;
-    bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) override;
-
     bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val,
                      std::vector<std::pair<std::string, std::string>> columns) override;
 

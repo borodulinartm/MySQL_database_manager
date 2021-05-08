@@ -28,7 +28,7 @@ bool SupplierManager::add() {
     return true;
 }
 
-std::vector<std::vector<std::string>> SupplierManager::get(int id) {
+std::vector<std::vector<std::string>> SupplierManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_supplier.get_cols()

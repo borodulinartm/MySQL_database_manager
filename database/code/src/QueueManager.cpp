@@ -36,7 +36,7 @@ queue QueueManager::get_queue() const {
     return my_queue;
 }
 
-std::vector<std::vector<std::string>> QueueManager::get(int id) {
+std::vector<std::vector<std::string>> QueueManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_queue.get_cols()

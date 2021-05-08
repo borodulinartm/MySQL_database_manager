@@ -34,7 +34,7 @@ location LocationManager::get_location() const {
     return my_location;
 }
 
-std::vector<std::vector<std::string>> LocationManager::get(int id) {
+std::vector<std::vector<std::string>> LocationManager::get() {
     check_access();
     std::vector<std::vector<std::string>> to_return = dbManager.get_data(
             table_name, my_location.get_cols()

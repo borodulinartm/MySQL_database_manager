@@ -30,16 +30,25 @@ std::vector<std::vector<std::string>> get_from_client(std::string &query, std::v
 client get_client() {
     std::ifstream stream("../tests/data/1.tst");
     if (!stream.is_open()) {
-        std::string message = "OOPS\n";
-        throw std::runtime_error(message.c_str());
+        std::cerr << "OOPS";
     }
 
     client my_client;
     stream >> my_client.user_id >> my_client.peopleInfo.name >>
            my_client.peopleInfo.login >> my_client.peopleInfo.password >>
            my_client.peopleInfo.registration_code;
-    
+
     stream.close();
 
     return my_client;
+}
+
+bool is_equal(const client& my_client, std::vector<std::string> data) {
+    std::string code = std::to_string(my_client.peopleInfo.registration_code);
+    if (my_client.peopleInfo.name == data[1] && my_client.peopleInfo.login == data[2] &&
+            my_client.peopleInfo.password == data[3] && code == data[4]) {
+        return true;
+    }
+
+    return false;
 }

@@ -251,6 +251,47 @@ std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::strin
     return data;
 }
 
+std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::string &table_name,
+                                                                std::vector<std::string> &cols, std::vector<std::pair<std::string, std::string>> condition) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    std::vector<std::vector<std::string>> data;
+    try {
+       query = "SELECT * FROM " + table_name + " WHERE ";
+       for (size_t i = 0; i < condition.size(); ++i) {
+           query += condition[i].first + "=";
+           if (is_digit(condition[i].second)) {
+               query += condition[i].second;
+           } else {
+               query += "\"" + condition[i].second + "\"";
+           }
+
+           if (i != condition.size() - 1) {
+               query += " AND ";
+           }
+       }
+
+       statement = connection->createStatement();
+       resultSet = statement->executeQuery(query);
+
+       std::vector<std::string> row;
+       while (resultSet->next()) {
+           for(auto &column: cols) {
+               row.push_back(resultSet->getString(column));
+           }
+
+           data.push_back(row);
+           row.clear();
+       }
+    } catch (sql::SQLException &exception) {
+        PrintError(exception, __FILE__, __LINE__);
+    }
+
+    return data;
+}
+
 bool DatabaseManager::delete_data(std::string &table_name, int id) {
     if (!is_connected_to_database) {
         connect_to_db();
@@ -258,40 +299,6 @@ bool DatabaseManager::delete_data(std::string &table_name, int id) {
 
     try {
         query = "DELETE FROM " + table_name + " WHERE id=" + std::to_string(id);
-
-        preparedStatement = connection->prepareStatement(query);
-        preparedStatement->executeUpdate();
-
-        return true;
-    } catch (sql::SQLException &exception) {
-        PrintError(exception, __FUNCTION__, __LINE__);
-    }
-
-    return false;
-}
-
-// Метод осуществляет обновление конкретного столбца (не всей строки)
-bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) {
-    if (!is_connected_to_database) {
-        connect_to_db();
-    }
-
-    try {
-        query = "UPDATE " + table_name + " SET ";
-        for(size_t i = 0; i < val.size(); ++i) {
-            query += val[i].first + "=";
-            if (is_digit(val[i].second)) {
-                query += val[i].second;
-            } else {
-                query += "\"" + val[i].second + "\"";
-            }
-
-            if (i != val.size() - 1) {
-                query += ", ";
-            }
-        }
-
-        query += " WHERE id=" + std::to_string(id);
 
         preparedStatement = connection->prepareStatement(query);
         preparedStatement->executeUpdate();
@@ -348,4 +355,3 @@ bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair
 
     return false;
 }
-

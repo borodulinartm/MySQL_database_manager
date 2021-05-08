@@ -30,8 +30,9 @@ protected:
     virtual bool insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
                              bool ignore_first = false) = 0;
     virtual std::vector<std::vector<std::string>> get_data(const std::string &table_name, std::vector<std::string> cols) = 0;
+    virtual std::vector<std::vector<std::string>> get_data(const std::string &table_name,
+                                                           std::vector<std::string> &cols, std::vector<std::pair<std::string, std::string>> condition) = 0;
     virtual bool delete_data(std::string &table_name, int id) = 0;
-    virtual bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) = 0;
     virtual bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val,
                              std::vector<std::pair<std::string, std::string>> columns) = 0;
 };

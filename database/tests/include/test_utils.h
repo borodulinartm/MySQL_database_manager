@@ -17,5 +17,6 @@
 
 std::vector<std::vector<std::string>> get_from_client(std::string &query, std::vector<std::string> &cols);
 client get_client();
+bool is_equal(const client& my_client, std::vector<std::string> data);
 
 #endif //DATABASE_PROG_TEST_UTILS_H
