@@ -20,6 +20,7 @@ include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysql)
 link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
 
 add_executable(prog code/src/main.cpp)
+
 target_link_libraries(prog database)
 target_link_libraries(prog)
 target_link_libraries(prog mysqlcppconn)
@@ -36,3 +37,4 @@ add_executable(test_database tests/src/tests.cpp tests/src/test_utils.cpp)
 
 target_link_libraries(test_database ${GTEST_LIBRARIES} -lpthread)
 target_link_libraries(test_database database)
+target_link_libraries(test_database mysqlcppconn)

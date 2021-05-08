@@ -51,11 +51,11 @@ bool DatabaseManager::_disconnectToUser() {
 }
 
 void DatabaseManager::PrintError(sql::SQLException &exception, std::string function, int line) {
-    std::cout << "# ERROR: SQLException in " << __FILE__;
-    std::cout << "(FUNCTION: " << function << ") on line " << line << std::endl;
-    std::cout << "Info: " << exception.what() << std::endl;
-    std::cout << "Code: " << exception.getErrorCode() << std::endl;
-    std::cout << "SQLState: " << exception.getSQLState() << std::endl;
+    std::cerr << "# ERROR: SQLException in " << __FILE__;
+    std::cerr << "(FUNCTION: " << function << ") on line " << line << std::endl;
+    std::cerr << "Info: " << exception.what() << std::endl;
+    std::cerr << "Code: " << exception.getErrorCode() << std::endl;
+    std::cerr << "SQLState: " << exception.getSQLState() << std::endl;
 }
 
 // Database functions
@@ -346,3 +346,4 @@ bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair
 
     return false;
 }
+
