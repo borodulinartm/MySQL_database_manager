@@ -23,6 +23,9 @@ public:
     bool delete_data(std::string &table_name, int id) override;
     bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val, int id) override;
 
+    bool update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val,
+                     std::vector<std::pair<std::string, std::string>> columns) override;
+
     bool is_table_exists(const std::string& table) override;
     bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns) override;
 

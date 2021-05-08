@@ -40,8 +40,15 @@ int main() {
 
     data_to_update_2.emplace_back("id_slot", std::to_string(320));
 
-    supplierManager.update(1, data_to_update);
-    orderManager.update(0, data_to_update_2);
+    std::vector<std::pair<std::string, std::string>> cols, cols_2;
+
+    cols.emplace_back(std::make_pair("name", "Vasya"));
+    cols.emplace_back(std::make_pair("registration_code", "1"));
+
+    cols_2.emplace_back(std::make_pair("id_user", "2"));
+
+    supplierManager.update(data_to_update, cols);
+    orderManager.update(data_to_update_2, cols_2);
 
     o.id_products = 2255;
     o.id_order = 1;

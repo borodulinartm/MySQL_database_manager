@@ -53,10 +53,10 @@ std::vector<std::string> QueueManager::to_vector() {
     return to_return;
 }
 
-bool QueueManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+bool QueueManager::update(std::vector<std::pair<std::string, std::string>> &val,
+                          std::vector<std::pair<std::string, std::string>> &columns) {
     check_access();
-
-    return dbManager.update_data(table_name, val, id);
+    return dbManager.update_data(table_name, val, columns);
 }
 
 void QueueManager::check_access() {

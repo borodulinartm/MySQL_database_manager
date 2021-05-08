@@ -40,9 +40,10 @@ bool SupplierManager::erase(int id) {
     return dbManager.delete_data(table_name, id);
 }
 
-bool SupplierManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+bool SupplierManager::update(std::vector<std::pair<std::string, std::string>> &val,
+                             std::vector<std::pair<std::string, std::string>> &columns) {
     check_access();
-    return dbManager.update_data(table_name, val, id);
+    return dbManager.update_data(table_name, val, columns);
 }
 
 std::vector<std::string> SupplierManager::to_vector() {

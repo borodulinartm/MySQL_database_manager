@@ -41,9 +41,10 @@ std::vector<std::vector<std::string>> LocationManager::get(int id) {
     return to_return;
 }
 
-bool LocationManager::update(int id, std::vector<std::pair<std::string, std::string>> &val) {
+bool LocationManager::update(std::vector<std::pair<std::string, std::string>> &val,
+                             std::vector<std::pair<std::string, std::string>> &columns) {
     check_access();
-    return dbManager.update_data(table_name, val, id);
+    return dbManager.update_data(table_name, val, columns);
 }
 
 std::vector<std::string> LocationManager::to_vector() {

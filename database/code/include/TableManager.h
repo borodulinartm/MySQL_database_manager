@@ -27,7 +27,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -52,8 +52,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
     std::vector<std::string> to_vector();
 };
 
@@ -77,7 +76,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -102,7 +101,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -127,7 +126,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -152,7 +151,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -177,7 +176,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };
@@ -202,7 +201,7 @@ public:
     bool add() override;
     std::vector<std::vector<std::string>> get(int id) override;
     bool erase(int id) override;
-    bool update(int id, std::vector<std::pair<std::string, std::string>> &val) override;
+    bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
     std::vector<std::string> to_vector();
 };

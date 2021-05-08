@@ -301,3 +301,48 @@ bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair
 
     return false;
 }
+
+bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair<std::string, std::string>> &val,
+                                  std::vector<std::pair<std::string, std::string>> columns) {
+    if (!is_connected_to_database) {
+        connect_to_db();
+    }
+
+    try {
+        query = "UPDATE " + table_name + " SET ";
+        for(size_t i = 0; i < val.size(); ++i) {
+            query += val[i].first + "=";
+            if (is_digit(val[i].second)) {
+                query += val[i].second;
+            } else {
+                query += "\"" + val[i].second + "\"";
+            }
+
+            if (i != val.size() - 1) {
+                query += ", ";
+            }
+        }
+
+        query += " WHERE ";
+        for(size_t i = 0; i < columns.size(); ++i) {
+            if (is_digit(columns[i].second)) {
+                query += columns[i].first + "=" + columns[i].second;
+            } else {
+                query += columns[i].first + "=" + "\"" + columns[i].second + "\"";
+            }
+
+            if (i != columns.size() - 1) {
+                query += " AND ";
+            }
+        }
+
+        preparedStatement = connection->prepareStatement(query);
+        preparedStatement->executeUpdate();
+
+        return true;
+    } catch (sql::SQLException &exception) {
+        PrintError(exception, __FUNCTION__, __LINE__);
+    }
+
+    return false;
+}
