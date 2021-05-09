@@ -180,7 +180,7 @@ bool DatabaseManager::create_table(const std::string& table_name,
 
 // Вставка данных в таблицу (будет работать для любого типа таблицы)
 bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std::string> &cols, std::vector<std::string> &data,
-                                  bool ignore_first) {
+                      bool ignore_first) {
     try {
         query = "INSERT INTO " + table_name + "(";
         for(size_t i = ignore_first; i < cols.size(); ++i) {
@@ -220,14 +220,14 @@ bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std
 bool DatabaseManager::is_digit(std::string &str) {
     return !str.empty() && std::find_if(
         str.begin(), str.end(), [](char c) {
-            return !std::isdigit(c);
+            return !std::isdigit(c) && c != '-';
         }
     ) == str.end();
 }
 
 // Извлечение данных
 std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::string &table_name,
-                                        std::vector<std::string> cols) {
+            std::vector<std::string> cols) {
     if (!is_connected_to_database) {
         connect_to_db();
     }
@@ -259,7 +259,7 @@ std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::strin
 }
 
 std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::string &table_name,
-                                                                std::vector<std::string> &cols, std::vector<std::pair<std::string, std::string>> condition) {
+        std::vector<std::string> &cols, std::vector<std::pair<std::string, std::string>> condition) {
     if (!is_connected_to_database) {
         connect_to_db();
     }

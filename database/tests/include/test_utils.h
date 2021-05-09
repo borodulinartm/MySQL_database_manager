@@ -15,11 +15,17 @@
 
 #include "TableManager.h"
 
+struct data {
+    std::string text;
+    bool is_digit;
+};
+
 sql::Connection *connect();
 std::vector<std::vector<std::string>> get_from_client(std::string &query, std::vector<std::string> &cols);
 std::vector<client> get_client();
 bool is_equal(const client& my_client, std::vector<std::string> data);
 std::vector<client> get_filtered_clients(std::vector<client> list_clients, std::string &filter);
-std::vector<std::string> execute_query(const std::string &query);
+std::vector<std::string> execute_query(const std::string &query, const std::string& col);
+std::vector<data> get_data();
 
 #endif //DATABASE_PROG_TEST_UTILS_H

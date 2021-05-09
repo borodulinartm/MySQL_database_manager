@@ -3,6 +3,13 @@
 #include "TableManager.h"
 #include "Data.h"
 
+#define PRINTER(name) printer(#name)
+
+std::string printer(const char *name) {
+    std::string v(name);
+    return v;
+}
+
 int main() {
     DatabaseManager databaseManager;
     supplier cl(1,2, "Vasya", "@bus", "dedf", 2);
@@ -45,5 +52,4 @@ int main() {
     orderManager.add(o);
 
     std::cout << "I want to eat in " << get_from_enum(TYPE_BUILDING::ULK) << std::endl;
-    return 0;
 }

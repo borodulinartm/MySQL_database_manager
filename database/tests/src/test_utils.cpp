@@ -43,7 +43,7 @@ std::vector<std::vector<std::string>> get_from_client(std::string &query, std::v
     return to_return;
 }
 
-std::vector<std::string> execute_query(const std::string &query) {
+std::vector<std::string> execute_query(const std::string &query, const std::string& col) {
     std::vector<std::string> to_return;
 
     try {
@@ -58,7 +58,7 @@ std::vector<std::string> execute_query(const std::string &query) {
         sql::ResultSet *resultSet = statement->executeQuery(query);
 
         while (resultSet->next()) {
-            to_return.push_back(resultSet->getString("Tables_in_testdb"));
+            to_return.push_back(resultSet->getString(col));
         }
 
         return to_return;
@@ -73,6 +73,7 @@ std::vector<client> get_client() {
     std::ifstream stream("../tests/data/1.tst");
     if (!stream.is_open()) {
         std::cerr << "OOPS";
+        exit(1);
     }
 
     std::vector<client> to_return;
@@ -109,4 +110,33 @@ std::vector<client> get_filtered_clients(std::vector<client> list_clients, std::
 
     filtered_by_name.resize(std::distance(filtered_by_name.begin(), it));
     return filtered_by_name;
+}
+
+std::vector<data> get_data() {
+    std::vector<data> my_data;
+
+    std::ifstream stream("../tests/data/2.tst");
+    if (!stream.is_open()) {
+        std::cerr << "OOPS";
+        exit(1);
+    }
+
+    std::string text, type_data;
+    data curr_data = {"", false};
+
+    while (!stream.eof()) {
+        stream >> text >> type_data;
+        curr_data.text = text;
+
+        if (type_data == "YES") {
+            curr_data.is_digit = true;
+        } else {
+            curr_data.is_digit = false;
+        }
+
+        my_data.push_back(curr_data);
+    }
+    stream.close();
+
+    return my_data;
 }

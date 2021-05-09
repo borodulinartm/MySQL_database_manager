@@ -5,6 +5,21 @@
 #include "TableManager.h"
 #include "test_utils.h"
 
+// Тестирование на проверку существования базы данных
+TEST(existing_db, is_database_exist) {
+    DatabaseManager dbManager;
+    std::vector<std::string> list_db = execute_query("SHOW DATABASES", "Database");
+    bool is_db_exists = false;
+
+    for(auto &database : list_db) {
+        if (database == DATABASE_NAME) {
+            is_db_exists = true;
+        }
+    }
+
+    ASSERT_EQ(is_db_exists, dbManager.is_db_exists());
+}
+
 // Тестирование создания таблицы
 TEST(create_table, create_table) {
     // Делаем на примере с клиентами
@@ -18,7 +33,7 @@ TEST(create_table, create_table) {
     dbManager.create_table(table_name, cols_sql);
 
     std::string query = "SHOW TABLES";
-    std::vector<std::string> tables = execute_query(query);
+    std::vector<std::string> tables = execute_query(query, "Tables_in_testdb");
 
     if (tables.empty()) {
         FAIL() << "Error in fetching result";
@@ -37,6 +52,37 @@ TEST(create_table, create_table) {
     } else {
         FAIL() << "table not found";
     }
+}
+
+// Проверка функции существования таблицы
+// (таблица уже была создана в предыдущем примере, поэтому
+// она гарантированно есть в БД)
+TEST(check_exists, is_table_exists) {
+    ClientManager clientManager;
+    DatabaseManager dbManager = clientManager.get_database_manager();
+
+    std::string table_name = "clients";
+    ASSERT_EQ(dbManager.is_table_exists(table_name), true);
+}
+
+// Тестирование получения колонок таблиц (метод get_cols)
+TEST(get_cols, get_columns_for_structure) {
+    client my_client;
+    std::vector<std::string> cols = my_client.get_cols();
+
+    std::vector<std::string> description = execute_query("DESC clients", "Field");
+
+    if (cols.size() != description.size()) {
+        FAIL() << "Sizes are not equal";
+    }
+
+    for(size_t i = 0; i < cols.size(); ++i) {
+        if (cols[i] != description[i]) {
+            FAIL() << "description are not equal";
+        }
+    }
+
+    SUCCEED();
 }
 
 // Тестирование вставки данных
@@ -171,6 +217,15 @@ TEST(convert_to_vector, convert) {
     }
 
     SUCCEED();
+}
+
+TEST(check_for_digit, is_digit) {
+    DatabaseManager dbManager;
+
+    std::vector<data> getted_data = get_data();
+    for(auto & i : getted_data) {
+        ASSERT_EQ(i.is_digit, dbManager.is_digit(i.text));
+    }
 }
 
 int main(int argc, char *argv[]) {

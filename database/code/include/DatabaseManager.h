@@ -30,22 +30,22 @@ public:
     bool is_table_exists(const std::string& table) override;
     bool create_table(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& columns) override;
 
+    bool is_digit(std::string &str);
 private:
     // Указатели, которые не работают в режиме smart pointers
     sql::Driver *driver;
     sql::Connection *connection;
     sql::Statement *statement;
     sql::ResultSet *resultSet;
-    sql::PreparedStatement *preparedStatement;
 
+    sql::PreparedStatement *preparedStatement;
     bool is_connected_to_user;
     bool is_connected_to_database;
-    std::string query;
 
+    std::string query;
     void PrintError(sql::SQLException &exception, const std::string& function, int line);
     bool _connectToUser();
     bool _disconnectToUser();
-    bool is_digit(std::string &str);
 };
 
 #endif //  UNTITLED_DB_MANAGER_H
