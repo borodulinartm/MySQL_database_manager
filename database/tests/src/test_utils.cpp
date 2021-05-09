@@ -57,3 +57,15 @@ bool is_equal(const client& my_client, std::vector<std::string> data) {
 
     return false;
 }
+
+std::vector<client> get_filtered_clients(std::vector<client> list_clients, std::string &filter) {
+    std::vector<client> filtered_by_name (list_clients.size());
+
+    auto it = std::copy_if(list_clients.begin(), list_clients.end(), filtered_by_name.begin(),
+   [filter](const client& curr_client) {
+       return curr_client.peopleInfo.name == filter;
+   });
+
+    filtered_by_name.resize(std::distance(filtered_by_name.begin(), it));
+    return filtered_by_name;
+}

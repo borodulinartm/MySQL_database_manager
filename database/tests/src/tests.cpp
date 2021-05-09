@@ -54,15 +54,9 @@ TEST(get_data, get) {
 
 // Тестирование извлечения данных по определённому критерию
 TEST(get_data_condition, get_condition) {
+    std::string name = "Artem";
     std::vector<client> my_client = get_client();
-    std::vector<client> filtered_by_name (my_client.size());
-
-    auto it = std::copy_if(my_client.begin(), my_client.end(), filtered_by_name.begin(),
-                           [](const client& curr_client) {
-        return curr_client.peopleInfo.name == "Artem";
-    });
-
-    filtered_by_name.resize(std::distance(filtered_by_name.begin(), it));
+    auto filtered_by_name = get_filtered_clients(my_client, name);
 
     ClientManager clientManager;
 
@@ -83,6 +77,30 @@ TEST(get_data_condition, get_condition) {
     SUCCEED();
 }
 
+// Тестирование обновления данных
+TEST(update_value, update_test) {
+    std::string new_name = "!!!Artem";
+    ClientManager clientManager;
+
+    std::vector<std::pair<std::string, std::string>> updated_data;
+    updated_data.emplace_back("name", new_name);
+
+    std::vector<std::pair<std::string, std::string>> condition;
+    condition.emplace_back("name", "Artem");
+
+    clientManager.update(updated_data, condition);
+
+    std::vector<client> my_client = get_client();
+    auto filtered_data = get_filtered_clients(my_client, new_name);
+
+    for(auto & i : filtered_data) {
+        if (i.peopleInfo.name != new_name) {
+            FAIL() << "Data not updated";
+        }
+    }
+
+    SUCCEED();
+}
 // Тестирование удаления данных из БД
 TEST(delete_value, remove) {
     ClientManager clientManager;

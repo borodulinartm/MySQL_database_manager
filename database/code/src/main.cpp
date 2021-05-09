@@ -40,7 +40,6 @@ int main() {
 
     data_to_update_2.emplace_back("id_slot", std::to_string(320));
 
-
     o.id_products = 2255;
     o.id_order = 1;
     orderManager.add(o);
