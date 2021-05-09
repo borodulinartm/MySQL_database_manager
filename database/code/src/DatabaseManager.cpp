@@ -32,7 +32,7 @@ bool DatabaseManager::_connectToUser() {
         std::cout << "CONNECT: SUCCESS\n";
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
-        return false;
+        exit(1);
     }
     is_connected_to_user = true;
     return is_connected_to_user;
@@ -45,12 +45,13 @@ bool DatabaseManager::_disconnectToUser() {
         return true;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
 }
 
-void DatabaseManager::PrintError(sql::SQLException &exception, std::string function, int line) {
+void DatabaseManager::PrintError(sql::SQLException &exception, const std::string& function, int line) {
     std::cerr << "# ERROR: SQLException in " << __FILE__;
     std::cerr << "(FUNCTION: " << function << ") on line " << line << std::endl;
     std::cerr << "Info: " << exception.what() << std::endl;
@@ -74,6 +75,7 @@ bool DatabaseManager::connect_to_db() {
         return is_connected_to_database;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -92,7 +94,7 @@ bool DatabaseManager::create_db() {
         statement->execute(query);
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
-        return false;
+        exit(1);
     }
     return true;
 }
@@ -116,6 +118,7 @@ bool DatabaseManager::is_db_exists() {
         }
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -139,6 +142,7 @@ bool DatabaseManager::is_table_exists(const std::string& table) {
         }
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -168,6 +172,7 @@ bool DatabaseManager::create_table(const std::string& table_name,
         return true;
     } catch(sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -206,6 +211,7 @@ bool DatabaseManager::insert_data(const std::string& table_name, std::vector<std
         return true;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -246,6 +252,7 @@ std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::strin
         return data;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return data;
@@ -287,6 +294,7 @@ std::vector<std::vector<std::string>> DatabaseManager::get_data(const std::strin
        }
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FILE__, __LINE__);
+        exit(1);
     }
 
     return data;
@@ -306,6 +314,7 @@ bool DatabaseManager::delete_data(std::string &table_name, int id) {
         return true;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;
@@ -351,6 +360,7 @@ bool DatabaseManager::update_data(std::string &table_name, std::vector<std::pair
         return true;
     } catch (sql::SQLException &exception) {
         PrintError(exception, __FUNCTION__, __LINE__);
+        exit(1);
     }
 
     return false;

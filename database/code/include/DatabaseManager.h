@@ -42,7 +42,7 @@ private:
     bool is_connected_to_database;
     std::string query;
 
-    void PrintError(sql::SQLException &exception, std::string function, int line);
+    void PrintError(sql::SQLException &exception, const std::string& function, int line);
     bool _connectToUser();
     bool _disconnectToUser();
     bool is_digit(std::string &str);

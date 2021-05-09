@@ -1,13 +1,28 @@
 #include "test_utils.h"
 
+sql::Connection *connect() {
+    try {
+        sql::Driver *driver = sql::mysql::get_driver_instance();
+        sql::Connection *connection = driver->connect("localhost", "artem", "!School211410l");
+        return connection;
+    } catch (sql::SQLException &exception) {
+        std::cerr << exception.what();
+    }
+
+    return nullptr;
+}
+
 std::vector<std::vector<std::string>> get_from_client(std::string &query, std::vector<std::string> &cols) {
     std::vector<std::vector<std::string>> to_return;
 
     try {
-        sql::Driver *driver = sql::mysql::get_driver_instance();
-        sql::Connection *connection = driver->connect("localhost", "artem", "!School211410l");
-        connection->setSchema("testdb");
+        auto connection = connect();
+        if (connection == nullptr) {
+            std::cerr << "Error in connecting";
+            return to_return;
+        }
 
+        connection->setSchema("testdb");
         sql::Statement *statement = connection->createStatement();
         sql::ResultSet *resultSet = statement->executeQuery(query);
 
@@ -23,6 +38,32 @@ std::vector<std::vector<std::string>> get_from_client(std::string &query, std::v
 
     } catch (sql::SQLException &exception) {
         std::cout << exception.what();
+    }
+
+    return to_return;
+}
+
+std::vector<std::string> execute_query(const std::string &query) {
+    std::vector<std::string> to_return;
+
+    try {
+        auto connection = connect();
+        if (connection == nullptr) {
+            std::cerr << "Error in connecting";
+            return to_return;
+        }
+
+        connection->setSchema("testdb");
+        sql::Statement *statement = connection->createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            to_return.push_back(resultSet->getString("Tables_in_testdb"));
+        }
+
+        return to_return;
+    } catch (sql::SQLException &exception) {
+        std::cerr << exception.what() << std::endl;
     }
 
     return to_return;

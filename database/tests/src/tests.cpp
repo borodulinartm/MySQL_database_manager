@@ -5,6 +5,41 @@
 #include "TableManager.h"
 #include "test_utils.h"
 
+// Тестирование создания таблицы
+TEST(create_table, create_table) {
+    // Делаем на примере с клиентами
+    ClientManager clientManager;
+    client c;
+    std::string table_name = "clients";
+
+    std::vector<std::pair<std::string, std::string>> cols_sql = c.get_cols_sql();
+
+    DatabaseManager dbManager = clientManager.get_database_manager();
+    dbManager.create_table(table_name, cols_sql);
+
+    std::string query = "SHOW TABLES";
+    std::vector<std::string> tables = execute_query(query);
+
+    if (tables.empty()) {
+        FAIL() << "Error in fetching result";
+    }
+
+    bool is_found = false;
+    for(auto &table: tables) {
+        std::cout << table << " ";
+        if (table_name == table) {
+            is_found = true;
+        }
+    }
+
+    if (is_found) {
+        SUCCEED();
+    } else {
+        FAIL() << "table not found";
+    }
+}
+
+// Тестирование вставки данных
 TEST(insert_data, insert) {
     std::vector<client> my_client = get_client();
     ClientManager clientManager;
@@ -30,6 +65,7 @@ TEST(insert_data, insert) {
     SUCCEED();
 }
 
+// Тестирование извлечения данных (когда извлекаем все данные целиком)
 TEST(get_data, get) {
     std::vector<client> my_client = get_client();
     ClientManager clientManager;
@@ -101,6 +137,7 @@ TEST(update_value, update_test) {
 
     SUCCEED();
 }
+
 // Тестирование удаления данных из БД
 TEST(delete_value, remove) {
     ClientManager clientManager;
@@ -116,6 +153,24 @@ TEST(delete_value, remove) {
     } else {
         FAIL() << "Data has not destroyed";
     }
+}
+
+// Тестирование конвертации данных (когда мы переводим из структуры)
+// в удобный для БД вид
+TEST(convert_to_vector, convert) {
+    std::vector<client> my_client = get_client();
+    ClientManager clientManager;
+
+    for(auto &client: my_client) {
+        clientManager.set_client(client);
+        std::vector<std::string> converted_string = clientManager.to_vector();
+
+        if (!is_equal(client, converted_string)) {
+            FAIL() << "Error in converting data";
+        }
+    }
+
+    SUCCEED();
 }
 
 int main(int argc, char *argv[]) {
