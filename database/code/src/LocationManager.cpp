@@ -8,6 +8,11 @@ LocationManager::LocationManager(const DatabaseManager& _dbManager, location _my
         dbManager(_dbManager), my_location(std::move(_my_location)), table_name("location") {
 }
 
+LocationManager::LocationManager(): table_name("location") {
+    my_location.id_location = my_location.floor = 0;
+    my_location.type_building = get_from_enum(TYPE_BUILDING::GZ);
+}
+
 bool LocationManager::add() {
     check_access();
 
@@ -20,7 +25,7 @@ bool LocationManager::add() {
     auto res = to_vector();
     auto cols = my_location.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -76,4 +81,8 @@ bool LocationManager::add(location _location) {
 
 DatabaseManager LocationManager::get_database_manager() const {
     return dbManager;
+}
+
+void LocationManager::set(location _location) {
+    my_location = std::move(_location);
 }

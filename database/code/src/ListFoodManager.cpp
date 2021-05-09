@@ -8,6 +8,10 @@ ListFoodManager::ListFoodManager(list_food _my_list_food): my_list_food(std::mov
             table_name("list_food") {
 }
 
+ListFoodManager::ListFoodManager(): table_name("list_food") {
+    my_list_food.id_food = my_list_food.id_products = my_list_food.total_cost = my_list_food.count_buying = 0;
+}
+
 bool ListFoodManager::add() {
     check_access();
 
@@ -19,7 +23,7 @@ bool ListFoodManager::add() {
     auto res = to_vector();
     auto cols = my_list_food.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -76,4 +80,8 @@ bool ListFoodManager::add(list_food _list_food) {
 
 DatabaseManager ListFoodManager::get_database_manager() const {
     return dbManager;
+}
+
+void ListFoodManager::set(list_food _list_food) {
+    my_list_food = std::move(_list_food);
 }

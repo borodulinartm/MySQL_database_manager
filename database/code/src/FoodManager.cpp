@@ -8,6 +8,12 @@ FoodManager::FoodManager(food _my_food): table_name("food"),
      my_food(std::move(_my_food)) {
 }
 
+FoodManager::FoodManager(): table_name("food") {
+    my_food.id_food = my_food.cost = 0;
+    my_food.name_eat = "";
+    my_food.where_use = WHERE_USE::CAFE;
+}
+
 bool FoodManager::add() {
     check_access();
 
@@ -20,7 +26,7 @@ bool FoodManager::add() {
     auto res = to_vector();
     auto cols = my_food.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -77,4 +83,8 @@ bool FoodManager::add(food _my_food) {
 
 DatabaseManager FoodManager::get_database_manager() const {
     return dbManager;
+}
+
+void FoodManager::set(food _food) {
+    my_food = std::move(_food);
 }

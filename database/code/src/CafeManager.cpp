@@ -7,6 +7,10 @@ CafeManager::CafeManager(const DatabaseManager& _dbManager, cafe _my_cafe):
 CafeManager::CafeManager(cafe _my_cafe): table_name("cafe"), my_cafe(std::move(_my_cafe)) {
 }
 
+CafeManager::CafeManager(): table_name("cafe") {
+    my_cafe.id_cafe = my_cafe.id_food = my_cafe.id_location = my_cafe.count_food = 0;
+}
+
 bool CafeManager::add() {
     check_access();
 
@@ -19,7 +23,7 @@ bool CafeManager::add() {
     auto res = to_vector();
     auto cols = my_cafe.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -77,3 +81,8 @@ bool CafeManager::add(cafe _cafe) {
 DatabaseManager CafeManager::get_database_manager() const {
     return dbManager;
 }
+
+void CafeManager::set(cafe _cafe) {
+    my_cafe = std::move(_cafe);
+}
+

@@ -1,5 +1,3 @@
-#include <utility>
-
 #include "TableManager.h"
 #include "Data.h"
 
@@ -9,6 +7,12 @@ ClientManager::ClientManager(const DatabaseManager& _dbManager, client _my_clien
 
 ClientManager::ClientManager(client _my_client): table_name("clients"),
                 my_client(std::move(_my_client)) {
+}
+
+ClientManager::ClientManager(): table_name("clients") {
+    my_client.user_id = 0;
+    my_client.peopleInfo.name = my_client.peopleInfo.login = my_client.peopleInfo.password = "";
+    my_client.peopleInfo.registration_code = 0;
 }
 
 bool ClientManager::add() {
@@ -93,3 +97,8 @@ client ClientManager::get_client() const {
 DatabaseManager ClientManager::get_database_manager() const {
     return dbManager;
 }
+
+void ClientManager::set_client(client _client) {
+    my_client = std::move(_client);
+}
+

@@ -47,7 +47,7 @@ std::vector<std::string> supplier::get_cols() {
 std::vector<std::pair<std::string, std::string>> supplier::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
 
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("cafe_id", "INT");
     cols.emplace_back("name", "VARCHAR(30)");
@@ -77,7 +77,7 @@ supplier::supplier(): supplier_id(0), cafe_id(0) {
 
 std::vector<std::pair<std::string, std::string>> list_food::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("id_food", "INT");
     cols.emplace_back("count_buying", "INT");
@@ -106,7 +106,7 @@ location::location(int _id_location, std::string _type_building, int _floor):
 
 std::vector<std::pair<std::string, std::string>> location::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("type_building", "VARCHAR(30)");
     cols.emplace_back("floor", "INT");
@@ -130,7 +130,7 @@ cafe::cafe(int _id_cafe, int _id_location, int _id_food, int _count_food):
 
 std::vector<std::pair<std::string, std::string>> cafe::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("id_location", "INT");
     cols.emplace_back("id_food", "INT");
@@ -162,7 +162,7 @@ std::vector<std::string> order::get_cols() {
 
 std::vector<std::pair<std::string, std::string>> order::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("id_cafe", "INT");
     cols.emplace_back("id_user", "INT");
@@ -185,7 +185,7 @@ food::food(int _id_food, std::string _name_eat, int _cost, int _where_use):
 
 std::vector<std::pair<std::string, std::string>> food::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
     cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("name_eat", "VARCHAR(30)");
     cols.emplace_back("cost", "INT");
@@ -209,7 +209,8 @@ queue::queue(int _id_slot, int _hour, int _minute): id_slot(_id_slot), hour(_hou
 
 std::vector<std::pair<std::string, std::string>> queue::get_cols_sql() {
     std::vector<std::pair<std::string, std::string>> cols;
-    cols.emplace_back("id", "INT");
+    cols.emplace_back("id", "INT AUTO_INCREMENT");
+    cols.emplace_back("PRIMARY KEY", "(id)");
     cols.emplace_back("hour", "INT");
     cols.emplace_back("minute", "INT");
 

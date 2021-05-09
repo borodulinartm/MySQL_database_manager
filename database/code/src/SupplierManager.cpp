@@ -11,6 +11,12 @@ SupplierManager::SupplierManager(supplier _my_supplier): table_name("suppliers")
                                                          my_supplier(std::move(_my_supplier)) {
 }
 
+SupplierManager::SupplierManager(): table_name("suppliers") {
+    my_supplier.supplier_id = my_supplier.cafe_id = 0;
+    my_supplier.peopleInfo.name = my_supplier.peopleInfo.login = my_supplier.peopleInfo.password = "";
+    my_supplier.peopleInfo.registration_code = 0;
+}
+
 bool SupplierManager::add() {
     check_access();
 
@@ -23,7 +29,7 @@ bool SupplierManager::add() {
     auto res = to_vector();
     auto cols = my_supplier.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -82,4 +88,8 @@ supplier SupplierManager::get_supplier() const {
 
 DatabaseManager SupplierManager::get_database_manager() const {
     return dbManager;
+}
+
+void SupplierManager::set(supplier _supp) {
+    my_supplier = std::move(_supp);
 }

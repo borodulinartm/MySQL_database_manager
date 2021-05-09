@@ -10,6 +10,10 @@ QueueManager::QueueManager(queue _my_queue): table_name("queue"),
     my_queue(std::move(_my_queue)) {
 }
 
+QueueManager::QueueManager(): table_name("queue") {
+    my_queue.id_slot = my_queue.hour = my_queue.minute = 0;
+}
+
 bool QueueManager::add() {
     check_access();
 
@@ -22,7 +26,7 @@ bool QueueManager::add() {
     auto res = to_vector();
     auto cols = my_queue.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -78,4 +82,8 @@ bool QueueManager::add(queue _queue) {
 
 DatabaseManager QueueManager::get_database_manager() const {
     return dbManager;
+}
+
+void QueueManager::set(queue _queue) {
+    my_queue = std::move(_queue);
 }

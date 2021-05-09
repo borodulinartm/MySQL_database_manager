@@ -17,11 +17,15 @@ private:
 public:
     ClientManager(const DatabaseManager& _dbManager, client _my_client);
     explicit ClientManager(client _my_client);
+    ClientManager();
 
     // Геттер
     client get_client() const;
     DatabaseManager get_database_manager() const;
     bool add(client _client);
+
+    // Сеттер
+    void set_client(client _client);
 
     // Переопределённые методы
     bool add() override;
@@ -43,11 +47,15 @@ private:
 public:
     SupplierManager(const DatabaseManager& _dbManager, supplier _my_supplier);
     explicit SupplierManager(supplier _my_supplier);
+    SupplierManager();
 
     // Геттеры
     supplier get_supplier() const;
     DatabaseManager get_database_manager() const;
     bool add(supplier _supplier);
+
+    // Сеттер
+    void set(supplier _supp);
 
     // Переопределённые методы
     bool add() override;
@@ -67,11 +75,15 @@ private:
 public:
     CafeManager(const DatabaseManager& _dbManager, cafe _my_cafe);
     explicit CafeManager(cafe _my_cafe);
+    CafeManager();
 
     // Геттер
     cafe get_cafe() const;
     DatabaseManager get_database_manager() const;
     bool add(cafe _cafe);
+
+    // Сеттер
+    void set(cafe _cafe);
 
     // Переопределённые методы
     bool add() override;
@@ -92,11 +104,15 @@ private:
 public:
     LocationManager(const DatabaseManager& _dbManager, location _my_location);
     explicit LocationManager(location _my_location);
+    LocationManager();
 
     // Геттер
     location get_location() const;
     DatabaseManager get_database_manager() const;
     bool add(location _location);
+
+    // Сеттер
+    void set(location _location);
 
     // Переопределённые методы
     bool add() override;
@@ -117,11 +133,15 @@ private:
 public:
     QueueManager(const DatabaseManager& _dbManager, queue _my_queue);
     explicit QueueManager(queue _my_queue);
+    QueueManager();
 
     // Геттер
     queue get_queue() const;
     DatabaseManager get_database_manager() const;
     bool add(queue _queue);
+
+    // Сеттер
+    void set(queue _queue);
 
     // Переопределённые методы
     bool add() override;
@@ -142,11 +162,15 @@ private:
 public:
     ListFoodManager(const DatabaseManager& _dbManager, list_food _my_list_food);
     explicit ListFoodManager(list_food _my_list_food);
+    ListFoodManager();
 
     // Геттер
     list_food get_list_food();
     DatabaseManager get_database_manager() const;
     bool add(list_food _list_food);
+
+    // Сеттер
+    void set(list_food _list_food);
 
     // Переопределённые методы
     bool add() override;
@@ -167,11 +191,15 @@ private:
 public:
     FoodManager(const DatabaseManager& _dbManager, food _my_food);
     explicit FoodManager(food _my_food);
+    FoodManager();
 
     // Геттер
     food get_food() const;
     DatabaseManager get_database_manager() const;
     bool add(food _my_food);
+
+    // Сеттер
+    void set(food _food);
 
     // Переопределённые методы
     bool add() override;
@@ -192,11 +220,15 @@ private:
 public:
     OrderManager(const DatabaseManager& _dbManager, order _my_order);
     explicit OrderManager(order _my_order);
+    OrderManager();
 
     // Геттер
     order get_order() const;
     DatabaseManager get_database_manager() const;
     bool add(order _order);
+
+    // Сеттер
+    void set(order _order);
 
     // Переопределённые методы
     bool add() override;

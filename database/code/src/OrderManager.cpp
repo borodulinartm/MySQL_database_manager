@@ -19,7 +19,7 @@ bool OrderManager::add() {
     auto res = to_vector();
     auto cols = my_order.get_cols();
 
-    dbManager.insert_data(table_name, cols, res);
+    dbManager.insert_data(table_name, cols, res, true);
 
     return true;
 }
@@ -80,4 +80,13 @@ bool OrderManager::add(order _order) {
 
 DatabaseManager OrderManager::get_database_manager() const {
     return dbManager;
+}
+
+OrderManager::OrderManager(): table_name("order") {
+    my_order.total_cost = my_order.id_products = my_order.id_slot = my_order.id_cafe =
+            my_order.id_order = my_order.id_supplier = my_order.stage = my_order.id_user = 0;
+}
+
+void OrderManager::set(order _order) {
+    my_order = std::move(_order);
 }
