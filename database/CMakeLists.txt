@@ -15,6 +15,10 @@ set(LIB_SOURCE_FILES
 add_library(database SHARED ${LIB_SOURCE_FILES})
 
 set(FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR /usr/local/mysql/connector-c++-)
+
+find_package(Boost COMPONENTS locale REQUIRED)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
 include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include)
 include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysql)
 link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
@@ -24,6 +28,7 @@ add_executable(prog code/src/main.cpp)
 target_link_libraries(prog database)
 target_link_libraries(prog)
 target_link_libraries(prog mysqlcppconn)
+target_link_libraries(prog ${Boost_LIBRARIES})
 target_compile_features(prog PRIVATE cxx_range_for)
 
 # Тесты
