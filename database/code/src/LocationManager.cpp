@@ -86,3 +86,14 @@ DatabaseManager LocationManager::get_database_manager() const {
 void LocationManager::set(location _location) {
     my_location = std::move(_location);
 }
+
+std::vector<std::vector<std::string>> LocationManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_location.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}

@@ -30,7 +30,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
-    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition);
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -60,6 +60,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
     std::vector<std::string> to_vector();
@@ -88,6 +89,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -117,6 +119,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -146,6 +149,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -175,6 +179,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -204,6 +209,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 
@@ -233,6 +239,7 @@ public:
     // Переопределённые методы
     bool add() override;
     std::vector<std::vector<std::string>> get() override;
+    std::vector<std::vector<std::string>> get(std::vector<std::pair<std::string, std::string>> condition) override;
     bool erase(int id) override;
     bool update(std::vector<std::pair<std::string, std::string>> &val, std::vector<std::pair<std::string, std::string>> &columns) override;
 

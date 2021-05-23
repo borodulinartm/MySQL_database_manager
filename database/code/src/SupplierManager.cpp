@@ -93,3 +93,14 @@ DatabaseManager SupplierManager::get_database_manager() const {
 void SupplierManager::set(supplier _supp) {
     my_supplier = std::move(_supp);
 }
+
+std::vector<std::vector<std::string>> SupplierManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_supplier.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}

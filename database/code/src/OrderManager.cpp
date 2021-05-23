@@ -90,3 +90,14 @@ OrderManager::OrderManager(): table_name("order") {
 void OrderManager::set(order _order) {
     my_order = std::move(_order);
 }
+
+std::vector<std::vector<std::string>> OrderManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_order.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}

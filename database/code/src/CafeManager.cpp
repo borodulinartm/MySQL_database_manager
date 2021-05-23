@@ -86,3 +86,14 @@ void CafeManager::set(cafe _cafe) {
     my_cafe = std::move(_cafe);
 }
 
+std::vector<std::vector<std::string>> CafeManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_cafe.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}
+

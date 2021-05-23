@@ -87,3 +87,14 @@ DatabaseManager QueueManager::get_database_manager() const {
 void QueueManager::set(queue _queue) {
     my_queue = std::move(_queue);
 }
+
+std::vector<std::vector<std::string>> QueueManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_queue.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}

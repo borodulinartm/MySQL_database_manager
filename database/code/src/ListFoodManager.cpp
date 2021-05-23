@@ -85,3 +85,14 @@ DatabaseManager ListFoodManager::get_database_manager() const {
 void ListFoodManager::set(list_food _list_food) {
     my_list_food = std::move(_list_food);
 }
+
+std::vector<std::vector<std::string>> ListFoodManager::get(std::vector<std::pair<std::string, std::string>> condition) {
+    check_access();
+
+    auto cols = my_list_food.get_cols();
+    std::vector<std::vector<std::string>> to_return = dbManager.get_data(
+            table_name,cols,std::move(condition)
+    );
+
+    return to_return;
+}
